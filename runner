@@ -1,0 +1,67 @@
+#!/usr/bin/python3
+from termcolor import colored
+from subprocess import call
+import sys
+import os
+
+# NOTE See $HOME/.zsh_aliases.re
+# NOTE arg[1] is extension
+# NOTE arg[2] is %:p:h is path
+# NOTE arg[3] is % is full file name
+# NOTE arg[4] is %:p:h:h ../ path
+
+# Suppress errors
+sys.stderr = object
+
+pth = sys.argv[2]
+fpth = sys.argv[3]
+ppth = sys.argv[4]
+fname = fpth.split(".")[0].split("/")[-1]
+
+hsh = {
+    "c": f"cd {pth} && gcc -g -std=c11 {fpth} -Wall -o {fname} -lm -lncurses "
+    + f"&& ./{fname} " 
+    + ""
+    ,
+
+    "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall -o ../{fname} " 
+    + f"&& ./../{fname} "
+    + ""
+    ,
+
+    "go": f"go run {fpth} " # use go build {fpth} for an executable
+    ,
+
+    "py": f"python {fpth} ",
+
+    "hs": f"cd {pth} && ghc -dynamic {fpth} -outputdir /tmp -o out"
+    + f"&& ./out "
+    + ""
+    ,
+
+    "sh": f"cd {pth} && sh {fpth} ",
+
+    "bash": f"cd {pth} && bash {fpth} "
+    + "-b test.html"
+    ,
+
+    "tex": f"cd {pth} && xelatex -jobname=out -output-directory=/tmp {fpth}"
+}
+
+try:
+    # print(f"{hsh[sys.argv[1]]}\n")
+    # call("sleep 1", shell=True)
+    call(f"{hsh[sys.argv[1]]}", shell=True)
+except(KeyError):
+    plat = sys.platform
+    supported_platform = plat != 'Pocket PC' and (plat != 'win32' or
+                                                  'ANSICON' in os.environ)
+    is_a_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+    if(is_a_tty):
+        print('{} {} {} {} extension is not configured'
+              .format(colored('[', 'white', attrs=['bold']),
+                      colored('Err', 'red', attrs=['bold']),
+                      colored(']', 'white', attrs=['bold']),
+                      colored(sys.argv[1], 'yellow', attrs=['bold'])))
+    else:
+        print(f"[Err] {sys.argv[1]} extension not configured")

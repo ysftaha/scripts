@@ -1,0 +1,15 @@
+libxft-bgra-git
+latex-pgfplots
+xorg-xinput
+libusbmuxd6
+libusbmuxd
+pistol-git
+checkra1n
+brave-bin
+dbg-macro
+i8kutils
+xbanish
+libusb
+gzdoom
+bear
+lf
