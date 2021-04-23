@@ -19,9 +19,9 @@ ppth = sys.argv[4]
 fname = fpth.split(".")[0].split("/")[-1]
 
 hsh = {
-    "c": f"cd {pth} && gcc -g -std=c11 {fpth} -Wall -o {fname} -lm -lncurses "
+    "c": f"cd {pth} && clang -g -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
     + f"&& ./{fname} " 
-    + ""
+    + "5"
     ,
 
     "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall -o ../{fname} " 
