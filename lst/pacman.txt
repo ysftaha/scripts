@@ -24,6 +24,7 @@ webkit2gtk
 xournalpp
 libnotify
 libmagick
+unclutter
 xlockmore
 aspell-en
 cpanminus
@@ -41,7 +42,6 @@ pamixer
 xdotool
 neomutt
 neovim
-texlab
 cronie
 nodejs
 upower
@@ -73,15 +73,16 @@ tcc
 fzf
 gcr
 fd
-ttf-nerd-fonts-symbols
 xfce-power-manager
+noto-fonts
 noto-fonts-emoji
 otf-font-awesome
+otf-fira-mono
+ttf-nerd-fonts-symbols
 ttf-joypixels
 ttf-roboto-mono
-noto-fonts
 texlive-latexextra
 texlive-langextra
-otf-fira-mono
 texlive-core
 texlive-bin
+texlab

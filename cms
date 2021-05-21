@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $1 in
+	play)
+		cmus-remote --pause;;
+	prev)
+		cmus-remote --prev;;
+	next)
+		cmus-remote --next;;
+	*);;
+esac

@@ -21,7 +21,7 @@ fname = fpth.split(".")[0].split("/")[-1]
 hsh = {
     "c": f"cd {pth} && clang -g -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
     + f"&& ./{fname} " 
-    + "5"
+    + "-a foo -f bar -s qux"
     ,
 
     "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall -o ../{fname} " 
@@ -39,7 +39,13 @@ hsh = {
     + ""
     ,
 
-    "sh": f"cd {pth} && sh {fpth} ",
+    "sh": f"cd {pth} && sh {fpth} "
+    + "adhan.txt"
+    ,
+
+    "awk": f"cd {pth} && awk -f {fpth} "
+    + "~/2021-Prayer-Times-Windsor.txt"
+    ,
 
     "bash": f"cd {pth} && bash {fpth} "
     + "-b test.html"

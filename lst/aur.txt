@@ -8,7 +8,6 @@ checkra1n
 brave-bin
 dbg-macro
 i8kutils
-xbanish
 libusb
 gzdoom
 bear
