@@ -1,0 +1,8 @@
+wheel
+pdftotext
+opencv-python
+ankivim
+termcolor
+vdirsyncer
+khal
+pynvim

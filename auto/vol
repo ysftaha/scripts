@@ -1,0 +1,23 @@
+#!/bin/sh
+# controls the volume through pulsemixer.
+
+mute=
+case $1 in
+	up)
+		pulsemixer --change-volume +1 
+		;;
+	down) 
+		pulsemixer --change-volume -1 
+		;;
+	mute) 
+		pulsemixer --toggle-mute 
+		[ `pulsemixer --get-mute` = 1 ] \
+		&& mute=muted \
+		|| mute=unmuted
+		;;
+esac
+
+vol=`pulsemixer --get-volume | cut -d' ' -f1`
+hints="-h int:value:$vol -h string:synchronous:volume"
+
+notify-send " $mute" $hints -a "scripts/vol"

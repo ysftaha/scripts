@@ -1,0 +1,11 @@
+acpid
+dbus
+dhcpcd
+i8kmon
+isc-ntpd
+ntpd
+sshd
+udevd
+uuidd
+wpa_supplicant
+tlp

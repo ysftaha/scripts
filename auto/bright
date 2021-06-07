@@ -1,0 +1,27 @@
+#! /bin/sh
+# brightness control.
+# increments in powers of two
+
+level=`xbacklight -get | cut -d '.' -f 1`
+case $1 in
+	?u)
+		if [ $level -eq 0 ]; then
+			level=1
+		elif [ $level -gt 100 ] || [ $level -eq 64 ] ; then
+			level=100
+		elif [ $level -lt 100 ]; then
+			level=$((level * 2)) 
+		fi
+		;;
+	?d) 
+		if [ $level -eq 100 ]; then
+			level=64
+		elif [ $level -gt 0 ]; then
+			level=$((level / 2)) 
+		fi
+		;;
+esac
+xbacklight -set $level
+
+notify-send " " -h int:value:$level -h string:synchronous:volume \
+	-a "scripts/bright"

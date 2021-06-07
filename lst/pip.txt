@@ -1,4 +1,0 @@
-neovim
-cppman
-python_language_server
-AnkiVim

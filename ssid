@@ -1,8 +1,0 @@
-#!/bin/sh
-router="$(iwgetid | awk -F '\"' '{print $2}')"
-
-if [ "$(iwgetid)" ==  "" ]; then
-  echo "[NA]"
-else
-  echo "${router}"
-fi

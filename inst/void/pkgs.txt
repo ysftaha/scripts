@@ -6,6 +6,8 @@ man-pages-posix
 curl
 screenFetch
 dosfstools
+tree-sitter
+tree-sitter-devel
 python3-devel
 youtube-dl
 python3-pip
@@ -19,6 +21,7 @@ clang
 libusb
 xclip
 Bear
+dict
 dictd
 nvimpager
 wget
@@ -43,6 +46,9 @@ neomutt
 newsboat
 qutebrowser
 cmus
+cmus-opus
+cmus-faad
+cmus-pulseaudio
 picom
 dunst
 anki
@@ -51,12 +57,12 @@ fonts-roboto-ttf
 noto-fonts-ttf
 font-awesome5
 
-iwd
-
 pdftk
 zathura
 zathura-djvu
 zathura-pdf-poppler
+poppler
+poppler-cpp-devel
 
 xournalpp
 inkscape
@@ -69,6 +75,7 @@ intel-ucode
 xf86-video-intel
 xf86-input-wacom
 i8kutils
+crda
 ntp
 
 xorg
@@ -84,9 +91,12 @@ xbanish
 upower
 bbswitch
 acpi_call-dkms
+lm_sensors
 powerstat
 htop
 tlp
 
 pavucontrol
 pulsemixer
+pulseaudio
+alsa-plugins-pulseaudio
