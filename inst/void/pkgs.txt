@@ -63,6 +63,12 @@ zathura-djvu
 zathura-pdf-poppler
 poppler
 poppler-cpp-devel
+texlab
+texlive
+texlive-latexextra
+texlive-langextra
+texlive-XeTeX
+texlive-Xdvi
 
 xournalpp
 inkscape
