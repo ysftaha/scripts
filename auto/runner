@@ -40,7 +40,7 @@ hsh = {
     ,
 
     "sh": f"cd {pth} && sh {fpth} "
-    + "~/git/conf"
+    + ""
     ,
 
     "awk": f"cd {pth} && awk -f {fpth} "

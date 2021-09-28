@@ -1,0 +1,46 @@
+#! /bin/sh
+
+Highlight() {
+ tree-sitter highlight -H $1                  \
+ 		| sed -e "s/style/class/g"                \
+ 		      -e "s/color: #001'/punctuation'/g"  \
+ 					-e "s/color: #002'/constant'/g"     \
+ 					-e "s/color: #003'/comment'/g"      \
+ 					-e "s/color: #004'/embedded'/g"     \
+ 					-e "s/color: #005'/constructor'/g"  \
+ 					-e "s/color: #006'/keyword'/g"      \
+ 					-e "s/color: #007'/number'/g"       \
+ 					-e "s/color: #008'/string'/g"       \
+ 					-e "s/color: #009'/function'/g"     \
+ 					-e "s/color: #0010'/type'/g"        \
+ 					-e "s/color: #0011'/attribute'/g"   \
+ 					-e "s/color: #0012'/tag'/g"         \
+ 					-e "s/color: #0013'/string'/g"      \
+ 					-e "s/color: #0014'/variable'/g"    \
+ 					-e "s/color: #0015'/property'/g"    \
+ 					-e "s/color: #0016'/operator'/g"    \
+ 					-e "s/color: #0017'/assignment'/g"
+}
+
+lines=`/bin/rg -n "\{\{\{" $1 | cut -d ':' -f1`
+for m in $lines; do
+	attr=`sed -n $m"p" $1`
+	case "$attr" in
+		*name=*.c) m=$((m + 1))
+			sed -n -e "$m,/}}}/ {/}}}/ !p}" $1 > tmp.c
+			Highlight tmp.c > tmp.html
+			rm tmp.c
+			snippet=`/bin/rg -n "<table>" tmp.html | cut -d ':' -f1`
+			sed -n -e "$snippet,/<\/table>/p" tmp.html > snippet.html
+			rm tmp.html
+			file=$2`echo $1 | cut -d "." -f 1`".html"
+			snipid=`echo $attr | cut -d "{" -f 4`
+			pre=`grep -n "$snipid" $file | cut -d ":" -f 1`
+			pre=$((pre + 1))
+			sed -i -n -e"$pre,/<\/pre>/ {/<\/pre>/ !d};p" $file
+			pre=$((pre - 1))
+			sed -i "$pre r snippet.html" $file
+			rm snippet.html
+			;;
+	esac
+done

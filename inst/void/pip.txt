@@ -6,3 +6,8 @@ termcolor
 vdirsyncer
 khal
 pynvim
+ueberzug
+speedtest-cli
+git+https://github.com/flyingrub/scdl
+wpm
+chs

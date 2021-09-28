@@ -8,4 +8,5 @@ sshd
 udevd
 uuidd
 wpa_supplicant
+bluetoothd 
 tlp

@@ -32,6 +32,7 @@ fzf
 git
 sxiv
 fd
+jq
 
 github-cli
 vim
@@ -42,13 +43,12 @@ aspell-en
 cpanminus
 irssi
 irssi-perl
-neomutt
+aerc
 newsboat
 qutebrowser
 cmus
 cmus-opus
 cmus-faad
-cmus-pulseaudio
 picom
 dunst
 anki
@@ -103,6 +103,14 @@ htop
 tlp
 
 pavucontrol
+pipewire
 pulsemixer
-pulseaudio
-alsa-plugins-pulseaudio
+libspa-bluetooth
+bluez
+kid3
+
+bind-utils
+
+tesseract-ocr-eng
+tesseract-ocr
+cropgui

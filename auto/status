@@ -5,7 +5,7 @@ do
 	stat=
 
 	#date
-	date=`date "+%I:%M [%-j]"`
+	date=`date "+%I^c#00af87^:^c#FFFFFF^%M ^c#00af87^[^c#FFFFFF^%a %d %b^c#00af87^]^c#FFFFFF^"`
 	stat=$stat" $date "
 
 	# battery
