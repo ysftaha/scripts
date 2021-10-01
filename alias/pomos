@@ -1,0 +1,5 @@
+#!/bin/sh
+# TODO remaining time
+# TODO Colors?
+
+ps -C pomo o start_time,etime,args | sed "s/\/.*pomo //g"
