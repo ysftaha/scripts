@@ -1,7 +1,10 @@
 #!/bin/sh
 # less wear
-xsetwacom set "Wacom Intuos S Pen stylus" Button 2 1
-xsetwacom set "Wacom Intuos S Pen stylus" Button 3 3
+xsetwacom set "Wacom Intuos S Pen stylus" Button 2 "pan"
+xsetwacom set "Wacom Intuos S Pen stylus" Button 3 "pan"
+
+xsetwacom set "Wacom Intuos S Pen stylus" PanScrollThreshold 100
+xsetwacom set "Wacom Intuos S Pen stylus" Rotate ccw
 
 # try absolute
 xsetwacom set "Wacom Intuos S Pen stylus" Mode "Absolute"

@@ -4,7 +4,7 @@ man-pages-devel
 man-pages-posix
 
 curl
-screenFetch
+ufetch
 dosfstools
 tree-sitter
 tree-sitter-devel
