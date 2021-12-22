@@ -1,3 +1,0 @@
-#! /bin/bash
-anki-vim -e nvim --editor-args \
-"-c set expandtab | set ft=html | argdo norm }}dj{dkk" $@

@@ -23,7 +23,6 @@ xclip
 Bear
 dict
 dictd
-nvimpager
 wget
 bat
 mpv
@@ -43,6 +42,7 @@ aspell-en
 cpanminus
 irssi
 irssi-perl
+aspell-devel
 aerc
 newsboat
 qutebrowser
@@ -65,6 +65,7 @@ poppler
 poppler-cpp-devel
 texlab
 texlive
+texlive-full
 texlive-latexextra
 texlive-langextra
 texlive-XeTeX
@@ -84,7 +85,7 @@ i8kutils
 crda
 ntp
 
-xorg
+xorg-minimal
 libXft-devel
 libXinerama-devel
 xwallpaper
@@ -95,7 +96,6 @@ notify-send.sh
 xbanish
 
 upower
-bbswitch
 acpi_call-dkms
 lm_sensors
 powerstat
@@ -114,3 +114,8 @@ bind-utils
 tesseract-ocr-eng
 tesseract-ocr
 cropgui
+
+nodejs
+wine
+
+rust-analyzer

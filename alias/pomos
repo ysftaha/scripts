@@ -1,5 +1,6 @@
-#!/bin/sh
-# TODO remaining time
-# TODO Colors?
-
-ps -C pomo o start_time,etime,args | sed "s/\/.*pomo //g"
+#! /bin/sh
+proc=`ps --no-headers -C pomo o pid,args | sed "s/\/.*pomo //g" | fzf`
+proc_pid=`echo $proc | cut -d" " -f1`
+[ ! $proc_pid ] &&
+  proc_pid=`echo $proc | cut -d" " -f2`
+[ $proc_pid ] && tail -f /proc/${proc_pid}/fd/1

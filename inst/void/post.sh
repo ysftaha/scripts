@@ -8,3 +8,6 @@
 # rm -r ~/.cpanm ~/.cpan
 # 
 # sym vdirsyncer calendars from .local/share/vdirsyncer/cal to ~/.config/khal
+# pip install neovim
+# npm install -g neovim
+# gem install neovim

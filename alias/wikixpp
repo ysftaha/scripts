@@ -1,4 +1,0 @@
-#! /bin/sh
-basexpp=~/.base.xopp
-xpplink="realpath "`echo $1 | tr -d "[ ] '" | cut -d":" -f2 | cut -d"|" -f1`
-cp $basexpp `eval $xpplink`

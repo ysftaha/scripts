@@ -1,0 +1,23 @@
+#! /bin/sh
+
+sound_alarm() {
+  org_vol=`pulsemixer --get-volume | cut -d' ' -f 1`
+  mut=`pulsemixer --get-mute`
+  vol=72
+
+  sleep 1                                            &&\
+    pulsemixer --unmute --set-volume $vol            &&\
+    mpv $BEEP --no-terminal                          &&\
+    pulsemixer --set-volume $org_vol                 &&\
+    [ $mut -eq 1 ] && pulsemixer --mute              &
+  sleep 1
+}
+
+a=`date -u --date="$(date) +$1" +%s`
+
+sudo rtcwake -a -m mem --time $a && \
+
+while :
+do 
+ sound_alarm
+done

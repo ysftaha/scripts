@@ -1,0 +1,3 @@
+#!/bin/sh
+path=~/git/ysftaha.com/src/
+cd $path && python -m http.server > /tmp/lserver.log 2>&1

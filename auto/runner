@@ -19,9 +19,9 @@ ppth = sys.argv[4]
 fname = fpth.split(".")[0].split("/")[-1]
 
 hsh = {
-    "c": f"cd {pth} && clang -g -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
+    "c": f"cd {pth} && clang -g -S -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
     + f"&& ./{fname} " 
-    + "-a foo -f bar -s qux"
+    + ""
     ,
 
     "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall -o ../{fname} " 
@@ -52,6 +52,10 @@ hsh = {
     ,
 
     "tex": f"cd {pth} && xelatex -jobname=out -output-directory=/tmp {fpth}"
+    + ""
+    ,
+
+    "asm": f"cd {pth} && cd .. && ./run.sh {fname}"
 }
 
 try:

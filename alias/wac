@@ -4,16 +4,16 @@ xsetwacom set "Wacom Intuos S Pen stylus" Button 2 "pan"
 xsetwacom set "Wacom Intuos S Pen stylus" Button 3 "pan"
 
 xsetwacom set "Wacom Intuos S Pen stylus" PanScrollThreshold 100
-xsetwacom set "Wacom Intuos S Pen stylus" Rotate ccw
+# xsetwacom set "Wacom Intuos S Pen stylus" Rotate cw
 
 # try absolute
 xsetwacom set "Wacom Intuos S Pen stylus" Mode "Absolute"
 xsetwacom set "Wacom Intuos S Pad pad" Mode "Absolute"
 
 # text tool
-xsetwacom set "Wacom Intuos S Pad pad" Button 1 "key +ctrl + shift t -ctrl -shift"
+xsetwacom set "Wacom Intuos S Pad pad" Button 1 "key +ctrl + shift r -ctrl -shift"
 # pen tool
 xsetwacom set "Wacom Intuos S Pad pad" Button 2 "key +ctrl + shift p -ctrl -shift"
 # straight pen
-xsetwacom set "Wacom Intuos S Pad pad" Button 3 "key +ctrl 6 -ctrl"
+xsetwacom set "Wacom Intuos S Pad pad" Button 3 "key +ctrl + shift i -ctrl -shift"
 xsetwacom set "Wacom Intuos S Pad pad" Button 8 "key del"

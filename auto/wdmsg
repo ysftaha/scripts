@@ -1,0 +1,2 @@
+#!/bin/sh
+watch --color -t ~/git/scripts/alias/dmsg
