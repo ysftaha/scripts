@@ -1,2 +1,2 @@
 #! /bin/sh
-sudo dmesg --color=always -T | tail
+sudo dmesg --color=always -T

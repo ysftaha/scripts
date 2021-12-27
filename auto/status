@@ -9,14 +9,15 @@ do
 	stat=$stat" $date "
 
 	# battery
-#	battery=`cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity`
-#  [ $battery -ge 99 ] && \
-#		stat=$stat"^b#00af87^^c#000000^"
-#  [ $battery -lt 75 ] && \
-#		stat=$stat"^b#ff8700^^c#000000^"
-#  [ $battery -lt 20 ] && \
-#		stat=$stat"^b#FF0000^^c#ffffff^                    "
-#	stat=$stat" $battery% "
+	battery=`cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity`
+  charge=
+  [ $battery -ge 99 ] && \
+		stat=$stat"^b#00af87^^c#000000^"
+  [ $battery -lt 75 ] && \
+		stat=$stat"^b#ff8700^^c#000000^"
+  [ $battery -lt 20 ] && \
+		stat=$stat"^b#FF0000^^c#ffffff^                    "
+	stat=$stat" $battery% "
 
   xsetroot -name "$stat"
 	sleep 60

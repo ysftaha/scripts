@@ -1,3 +1,0 @@
-Packages experimentaly removed :
-	- bbswitch
-	- xorg (using xorg-minimal for next reset)

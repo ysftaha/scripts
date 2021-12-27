@@ -3,7 +3,7 @@
 sound_alarm() {
   org_vol=`pulsemixer --get-volume | cut -d' ' -f 1`
   mut=`pulsemixer --get-mute`
-  vol=72
+  vol=82
 
   sleep 1                                            &&\
     pulsemixer --unmute --set-volume $vol            &&\

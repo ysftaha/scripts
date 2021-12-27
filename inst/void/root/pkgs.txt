@@ -1,7 +1,16 @@
 base-devel
-
+xtools
 man-pages-devel
 man-pages-posix
+xorg-minimal
+setxkbmap
+xsetroot
+xbacklight
+xorg-fonts
+libXft-devel
+libXinerama-devel
+git
+make
 
 curl
 ufetch
@@ -28,13 +37,13 @@ bat
 mpv
 maim
 fzf
-git
 sxiv
 fd
 jq
 
-github-cli
 vim
+neovim
+emacs-gtk3
 zsh
 
 aspell
@@ -53,9 +62,10 @@ picom
 dunst
 anki
 
-fonts-roboto-ttf
-noto-fonts-ttf
+google-fonts-ttf
+noto-fonts-ttf 
 font-awesome5
+font-firacode
 
 pdftk
 zathura
@@ -85,9 +95,6 @@ i8kutils
 crda
 ntp
 
-xorg-minimal
-libXft-devel
-libXinerama-devel
 xwallpaper
 xinput
 xev
@@ -95,7 +102,6 @@ xev
 notify-send.sh
 xbanish
 
-upower
 acpi_call-dkms
 lm_sensors
 powerstat
@@ -116,6 +122,5 @@ tesseract-ocr
 cropgui
 
 nodejs
-wine
 
 rust-analyzer

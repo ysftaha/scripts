@@ -1,4 +1,5 @@
 wheel
+neovim
 pdftotext
 opencv-python
 ankivim
