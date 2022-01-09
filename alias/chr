@@ -1,2 +1,2 @@
 #! /bin/sh
-ungoogled-chromium --app=https://en.wikipedia.org/wiki/Main_Page
+ungoogled-chromium --app=https://en.wikipedia.org/wiki/Portal:Mathematics

@@ -21,10 +21,10 @@ if sys.argv[1] == "--toggle":
     device = sys.argv[2]
     if get_state(device):
         state = "disable"
-        sp.call(f"notify-send -t 1500 -a \"~/scripts/devtogle\" \
+        sp.call(f"notify-send -t 1500 -a \"scripts/devtogle\" \
                 \"{device}\" disabled", shell=True)
     else:
         state = "enable"
-        sp.call(f"notify-send -t 1500 -a \"~/scripts/devtogle\" \
+        sp.call(f"notify-send -t 1500 -u critical -a \"scripts/devtogle\" \
                 \"{device}\" enabled", shell=True)
     sp.call(f"xinput {state} \"{device}\"", shell=True)

@@ -20,3 +20,5 @@ sh pip.sh pip.txt
 sh npm.sh npm.txt
 
 sh gem.sh gem.txt
+
+sh ungoogled-chromium.sh

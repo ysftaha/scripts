@@ -1,23 +1,41 @@
 #!/bin/sh
 
-while true 
+while true
 do
+  id=' '
 	stat=
 
 	#date
-	date=`date "+^c#FFFFFF^%I^c#00af87^:^c#FFFFFF^%M ^c#00af87^[^c#FFFFFF^%a %d %b^c#00af87^]^c#FFFFFF^"`
+	date=`date "+^c#FFFFFF^%I^c#555555^:^c#FFFFFF^%M ^c#555555^[^c#FFFFFF^%a %d %b^c#555555^]^c#FFFFFF^"`
 	stat=$stat" $date "
 
+  # connectivity
+  [ "`rfkill list wlan | grep Soft | cut -d":" -f2`" = " no" ] && stat=$stat"^c#555555^[^c#FFFFFF^" && f=1
+  [ "`rfkill list bluetooth | grep Soft | cut -d":" -f2`" = " no" ] && stat=$stat" " && f=1
+  [ $f = 1 ] && stat=$stat"^c#555555^]^c#FFFFFF^ "
+
 	# battery
-	battery=`cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity`
-  charge=
-  [ $battery -ge 99 ] && \
-		stat=$stat"^b#00af87^^c#000000^"
-  [ $battery -lt 75 ] && \
-		stat=$stat"^b#ff8700^^c#000000^"
-  [ $battery -lt 20 ] && \
-		stat=$stat"^b#FF0000^^c#ffffff^                    "
-	stat=$stat" $battery% "
+  [ -f /sys/class/power_supply/BAT0/capacity ] && battery=`cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity`
+  batstat=`cat /sys/class/power_supply/BAT0/status`
+
+  stat=$stat"^c#555555^[^c#FFFFFF^"
+
+  if [ $battery -ge 99 ]
+  then
+		stat=$stat"^c#00af87^^b#000000^"
+# FIXME uncomment when new battery is installed
+#   id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery fully charged"`
+  elif [ $battery -lt 20 ]
+  then
+		stat=$stat"^b#FF0000^^c#ffffff^"
+    [ ! $batstat = "Charging" ] && id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery critically low"`
+  elif [ $battery -lt 75 ]
+  then
+		stat=$stat"^c#ff8700^^b#000000^"
+  fi
+	stat=$stat"$battery%"
+
+  stat=$stat"^c#555555^^b#000000^]"
 
   xsetroot -name "$stat"
 	sleep 60

@@ -2,13 +2,10 @@
 . ../func.sh
 
 # Add user with groups
-sh userp.sh "u:wheel,audio,disk"
+sh userp.sh "u:wheel,audio,disk,socklog"
 
 # Elevate wheel group privelages
 sh wheelp.sh
-
-# Add resume partition uuid to bootloader parameters
-sh swap-uuid.sh
 
 # Migrate backup to user
 sh migrate.sh "/dev/sdb1:u"
@@ -17,18 +14,21 @@ sh migrate.sh "/dev/sdb1:u"
 # (some configs might be linked globaly in etc)
 sh link.sh "/home/u/git/conf"
 
+# Add resume partition uuid to bootloader parameters
+sh swap-uuid.sh 
+
 # Install xbps-packages
 sh pkgs.sh pkgs.txt
 
 # Enable runit services
 sh srvcs.sh srvcs.txt
 
+# Cron jobs
+sh cron.sh "../cron/"
+
 # chown home directory recursively except for .config/etc/ which is owned by
 # root for symbolic linking purposes
-sh chn.sh "u:wheel"
+sh chn.sh "u:u"
 
 und "Changing user default shell to zsh"
 sh chsh.sh "u:/usr/bin/zsh"
-
-# kernel modules
-sh mod.sh "/home/u/.config/zsh/.zshrc" "mod.txt"

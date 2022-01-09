@@ -19,7 +19,11 @@ ppth = sys.argv[4]
 fname = fpth.split(".")[0].split("/")[-1]
 
 hsh = {
-    "c": f"cd {pth} && clang -g -S -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
+    "": f"cd {pth} && sh {fpth} "
+    + ""
+    ,
+
+    "c": f"cd {pth} && clang -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
     + f"&& ./{fname} " 
     + ""
     ,
@@ -40,7 +44,7 @@ hsh = {
     ,
 
     "sh": f"cd {pth} && sh {fpth} "
-    + "/home/u/git/conf"
+    + "~/prayers.txt ~/tmp.org"
     ,
 
     "awk": f"cd {pth} && awk -f {fpth} "

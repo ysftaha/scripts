@@ -1,2 +1,3 @@
 #! /bin/sh
+xdotool mousemove 1920 0
 $AUTO/devtoggle --toggle 'DLL07BE:01 06CB:7A13 Touchpad'

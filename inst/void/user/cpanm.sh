@@ -6,4 +6,4 @@ do
   cpanm --force --sudo $i
 done
 
-command sudo rm -r $HOME/.cpanm $HOME/.cpan
+command sudo rm -r $HOME/.cpanm $HOME/.cpan $HOME/perl5

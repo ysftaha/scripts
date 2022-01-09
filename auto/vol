@@ -17,7 +17,8 @@ case $1 in
 		;;
 esac
 
-vol=`pulsemixer --get-volume | cut -d' ' -f1`
-hints="-h int:value:$vol -h string:synchronous:volume"
 
-notify-send " $mute" $hints -a "scripts/vol"
+#vol=`pulsemixer --get-volume | cut -d' ' -f1`
+#hints="-h int:value:$vol -h string:asynchronous:volume"
+#file='/tmp/volume.dat'
+#notify-send.sh -R $file " $mute" $hints -a "scripts/vol"

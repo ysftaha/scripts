@@ -3,17 +3,21 @@ xtools
 man-pages-devel
 man-pages-posix
 xorg-minimal
+xdotool
 setxkbmap
+xwininfo
+xprop
 xsetroot
 xbacklight
 xorg-fonts
 libXft-devel
 libXinerama-devel
+github-cli
 git
 make
 
 curl
-ufetch
+pfetch
 dosfstools
 tree-sitter
 tree-sitter-devel
@@ -25,6 +29,7 @@ ripgrep
 tree
 unzip
 ruby
+ruby-devel
 zip
 clang
 libusb
@@ -43,7 +48,7 @@ jq
 
 vim
 neovim
-emacs-gtk3
+emacs-x11
 zsh
 
 aspell
@@ -60,10 +65,11 @@ cmus-opus
 cmus-faad
 picom
 dunst
+dcron
 anki
 
 google-fonts-ttf
-noto-fonts-ttf 
+noto-fonts-ttf
 font-awesome5
 font-firacode
 
@@ -102,9 +108,10 @@ xev
 notify-send.sh
 xbanish
 
+nvme-cli
 acpi_call-dkms
 lm_sensors
-powerstat
+powertop
 htop
 tlp
 
@@ -124,3 +131,6 @@ cropgui
 nodejs
 
 rust-analyzer
+dijo
+
+socklog-void

@@ -1,5 +1,6 @@
 #! /bin/sh
 
+
 sound_alarm() {
   org_vol=`pulsemixer --get-volume | cut -d' ' -f 1`
   mut=`pulsemixer --get-mute`

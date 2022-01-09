@@ -4,5 +4,10 @@
 builddir=$1
 for i in `ls $builddir`
 do
-  [ ! $i = "other" ] && cd $builddir/$i && make install
+  if [ ! $i = "other" ] 
+  then
+    yellow "Building $i\n"
+    cd $builddir/$i  
+    make install
+  fi
 done

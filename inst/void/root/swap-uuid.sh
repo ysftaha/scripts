@@ -4,13 +4,11 @@
 grub=/etc/default/grub
 fst=/etc/fstab
 
-und "Pointing grub to wakeup resume partition"
-
+und "Adding resume kernel parameter to bootloader"
 uuid=`/bin/grep swap $fst | cut -d" " -f1`
 uuid="resume=$uuid"
-echo "\n" >> $grub
-command echo "# Add to GRUB_CMDLINE_LINUX_DEFAULT" >> $grub
-echo $uuid >> $grub
+
+echo "\n$uuid " >> $grub
  
 vi -c $ $grub 
 update-grub

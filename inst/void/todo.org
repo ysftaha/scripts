@@ -1,9 +1,3 @@
-# TODO ungoogled_chromium
-# TODO ungoogled in chrome://settings toggle clear cookies
-# TODO ungoogled_chromium plugins
-# TODO tlp
-# TODO mime
-# TODO gem neovim
-# TODO fstab ssd TRIM and optimizing performance see !aw ssd 
-# TODO not sure if the evo supports trim 
-# TODO evo power consumption
+* TODO ungoogled in chrome://settings toggle clear cookies
+* TODO ungoogled_chromium plugins
+* TODO mime @ .local/share/applications

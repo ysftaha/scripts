@@ -7,6 +7,7 @@ termcolor
 vdirsyncer
 khal
 pynvim
+pyright
 ueberzug
 speedtest-cli
 git+https://github.com/flyingrub/scdl
