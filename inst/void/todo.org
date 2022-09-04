@@ -1,4 +1,3 @@
 * DONE mime symlink .config/applications -> .local/share/applications
-** TODO Watch for errors from this symlink
 * TODO ungoogled in chrome://settings toggle clear cookies
 * TODO ungoogled_chromium plugins
