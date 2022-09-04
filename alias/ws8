@@ -1,5 +1,0 @@
-#!/usr/bin/zsh
-st -e htop &
-st -e ~/git/scripts/auto/wdmsg &
-st -e irssi --home /home/u/.config/irssi/ --config /home/u/.config/irssi/config &
-st -e nvim -c "set spell" -c "set ft=irc" /tmp/math.irc

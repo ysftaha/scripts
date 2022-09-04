@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# vim: tw=0
 from termcolor import colored
 from subprocess import call
 import sys
@@ -23,13 +24,21 @@ hsh = {
     + ""
     ,
 
-    "c": f"cd {pth} && clang -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname}"
-    + f"&& ./{fname} " 
+    "lex": f"cd {pth} && jlex {fname}.lex"
+    ,
+
+    "java": f"cd {pth} && javac {fpth} -d ../build "
+    + f"&& cd ../build && java {fname} "
     + ""
     ,
 
-    "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall -o ../{fname} " 
-    + f"&& ./../{fname} "
+    "c": f"cd {pth} && clang -g -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname} -lbluetooth"
+    + f"&& ./{fname} addresses.txt" 
+    + ""
+    ,
+
+    "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall " 
+    + f"&& ./a.out "
     + ""
     ,
 
@@ -44,7 +53,7 @@ hsh = {
     ,
 
     "sh": f"cd {pth} && sh {fpth} "
-    + "~/prayers.txt ~/tmp.org"
+    + ""
     ,
 
     "awk": f"cd {pth} && awk -f {fpth} "

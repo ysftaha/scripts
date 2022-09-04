@@ -32,6 +32,10 @@ ruby
 ruby-devel
 zip
 clang
+lldb
+rr
+apache-ant
+apache-ant-doc
 libusb
 xclip
 Bear
@@ -56,6 +60,8 @@ aspell-en
 cpanminus
 irssi
 irssi-perl
+bitlbee-discord
+bitlbee
 aspell-devel
 aerc
 newsboat
@@ -63,12 +69,14 @@ qutebrowser
 cmus
 cmus-opus
 cmus-faad
+cmus-pulseaudio
 picom
 dunst
 dcron
 anki
 
 google-fonts-ttf
+terminus-font
 noto-fonts-ttf
 font-awesome5
 font-firacode
@@ -95,7 +103,6 @@ xdg-utils
 lf
 
 intel-ucode
-xf86-video-intel
 xf86-input-wacom
 i8kutils
 crda
@@ -109,10 +116,12 @@ notify-send.sh
 xbanish
 
 nvme-cli
-acpi_call-dkms
+sysstat
 lm_sensors
 powertop
 htop
+lsof
+strace
 tlp
 
 pavucontrol
@@ -124,13 +133,16 @@ kid3
 
 bind-utils
 
-tesseract-ocr-eng
-tesseract-ocr
 cropgui
 
 nodejs
 
 rust-analyzer
-dijo
 
 socklog-void
+
+acpi_call-dkms
+xf86-video-intel
+
+wmctrl
+fwupd

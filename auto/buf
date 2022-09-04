@@ -1,0 +1,5 @@
+#! /bin/sh
+xdotool set_window --urgency 1 `wmctrl -l | grep -v scratchpad | dmenu -i | cut -d " " -f1` 
+dwmc focusurgent
+dwmc setmfact +0
+# xdotool set_window --urgency 1 `wmctrl -l | grep nvim | fzf --print-query --preview 'eval bat --color always $(echo {} | rev | cut -d" "  -f1 | rev | cat)' | cut -d " " -f1 | sed -n '2p'` && dwmc focusurgent

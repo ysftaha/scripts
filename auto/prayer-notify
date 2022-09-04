@@ -1,0 +1,4 @@
+#! /bin/sh
+export DISPLAY=:0 
+export XAUTHORITY=/home/u/.runtime/Xauthority
+notify-send.sh -t 0 -u low -a Prayer $1

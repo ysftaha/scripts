@@ -1,2 +1,0 @@
-#! /bin/sh
-ungoogled-chromium --app=https://en.wikipedia.org/wiki/Portal:Mathematics

@@ -1,2 +1,3 @@
 neovim
 vim-language-server
+bash-language-server

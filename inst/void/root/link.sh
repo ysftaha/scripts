@@ -18,6 +18,8 @@ entry() {
 
 while read line
 do
+  orig="`entry 3``entry 2 |rev| cut -d'/' -f1 |rev`"
+  [ ! -z `entry 5` ] && command rm $orig
   [ ! -z `entry 1` ] && [ ! -d `entry 3` ] && command mkdir -p `entry 3`
   command ln -s $conf/`entry 2` `entry 3`
   [ ! -z `entry 4` ] && command rename `entry 3`/`entry 2` `entry 3`/`entry 4` `entry 3`/`entry 2`

@@ -1,30 +1,116 @@
 #!/bin/sh
+# TODO Refactor this crap into functions
+pomo_time() {
+  local proc=`ps --no-headers -C pomo o pid,args | sed -e "s/\/.*pomo //g" -e 's/^\s*//' | grep 'PSESS'`
+  local prefix=''
 
+  if [ -z "$proc" ]
+  then
+    pomot=""
+    return 1
+  elif [ `echo "$proc" | wc -l` -ne 1 ]
+  then
+    pomot="Err"
+    return 1
+  fi
+
+  local proc_pid=`echo "$proc" | cut -d" " -f1`
+  local pom_stat=`echo "$proc" | cut -d':' -f 2 | cut -d'.' -f 1 | cut -d' ' -f 2`
+  local pmo_time=`tail -1 /proc/$proc_pid/fd/1 | rev | cut -d" " -f2 | rev`
+
+  # Work
+  [ "$pom_stat" = "Break" ] && prefix='^c#ffffff^^b#00005f^'
+
+  pomot="$prefix$pmo_time$sep"
+}
+
+touch /tmp/idle.dat
 while true
 do
   id=' '
-	stat=
+	stat=' '
+  prefix="^c#555555^^b#000000^[^c#ffffff^^b#000000^"
+  gray="^c#555555^^b#000000^"
+  norm="^c#ffffff^^b#000000^"
+  suffix="^c#555555^^b#000000^]"
+  sep="^c#555555^^b#000000^|^c#ffffff^"
 
-	#date
-	date=`date "+^c#FFFFFF^%I^c#555555^:^c#FFFFFF^%M ^c#555555^[^c#FFFFFF^%a %d %b^c#555555^]^c#FFFFFF^"`
-	stat=$stat" $date "
+  # ┌──────┐
+  # │ Pomo │
+  # └──────┘
+  pomo_time
+  stat="$stat$prefix$pomot"
 
-  # connectivity
-  [ "`rfkill list wlan | grep Soft | cut -d":" -f2`" = " no" ] && stat=$stat"^c#555555^[^c#FFFFFF^" && f=1
-  [ "`rfkill list bluetooth | grep Soft | cut -d":" -f2`" = " no" ] && stat=$stat" " && f=1
-  [ $f = 1 ] && stat=$stat"^c#555555^]^c#FFFFFF^ "
+  # ┌──────┐
+  # │ Date │
+  # └──────┘
+  timesep="^c#555555^^b#000000^:^c#ffffff^"
+	stat=$stat"`date +%I$timesep%M`$suffix"
 
-	# battery
+  # ┌──────────────┐
+  # │ System stats │
+  # └──────────────┘
+  stat="$stat $prefix^c#ffffff^`free -h --si | sed -n '/Mem/p' | sed 's/\s\+/ /g' | cut -d' ' -f 3`"'^c#555555^|^c#FFFFFF^'
+
+  (mpstat 4 1 | tail -n 1 | rev | cut -d' ' -f 1 | rev | cut -d'.' -f 1 | tee /tmp/idle.dat) &
+
+  idle=`cat /tmp/idle.dat`
+  if [ ! ${#idle} -lt 1 ] 
+  then 
+    usage=$((100 - $idle))
+  else
+    usage=0
+  fi
+
+  if [ ${#usage} -le 1 ] 
+  then
+    usage=" $usage"
+  else
+    usage="$usage"
+  fi
+  
+  stat="$stat^c#ffffff^$usage% ^c#555555^@^c#FFFFFF^ `sensors | sed -n '/Package id/p' | cut -d'.' -f 1 | cut -d'+' -f2`°$suffix"
+
+  # ┌────────┐
+  # │ Radios │
+  # └────────┘
+
+  [ -n "`rfkill list wlan | grep 'Soft blocked: no'`" ] && stat=$stat" "
+  [ -n "`rfkill list bluetooth | grep 'Soft blocked: no'`" ] && stat=$stat" "
+
+  # ┌────────────────────────────┐
+  # │ Headphone/earphone Battery │
+  # └────────────────────────────┘
+  stat="$stat $prefix"
+  hbat=`bluetoothctl info 94:DB:56:D5:44:21|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
+  [ -n "$hbat" ] && stat="$stat$hbat%$gray$sep$norm"
+
+  ebat=`bluetoothctl info F4:BC:DA:77:AA:49|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
+  [ -n "$ebat" ] && stat="$stat$ebat%$gray$sep$norm"
+
+  # ┌──────────────────┐
+  # │ Keyboard Battery │
+  # └──────────────────┘
+  connected=`bluetoothctl info FF:48:DE:58:48:B5|grep 'Connected: yes'`
+  if [ -n "$connected" ] 
+  then
+    attr='/org/bluez/hci0/dev_FF_48_DE_58_48_B5/service0010/char0011'
+    kbathex=`echo "menu gatt\nattribute-info $attr\nquit\n"|bluetoothctl|/bin/grep -A 1 "Value:"|tail -1|cut -d' ' -f3` 
+    kbat=`echo $((0x$kbathex))`
+    [ -n "$kbat" ] && stat="$stat$kbat%$gray$sep$norm"
+  fi
+
+  # ┌─────────┐
+  # │ Battery │
+  # └─────────┘
   [ -f /sys/class/power_supply/BAT0/capacity ] && battery=`cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity`
   batstat=`cat /sys/class/power_supply/BAT0/status`
-
-  stat=$stat"^c#555555^[^c#FFFFFF^"
-
+  stat=$stat
   if [ $battery -ge 99 ]
   then
 		stat=$stat"^c#00af87^^b#000000^"
-# FIXME uncomment when new battery is installed
-#   id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery fully charged"`
+  # FIXME uncomment when new battery is installed
+  #  id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery fully charged"`
   elif [ $battery -lt 20 ]
   then
 		stat=$stat"^b#FF0000^^c#ffffff^"
@@ -34,9 +120,9 @@ do
 		stat=$stat"^c#ff8700^^b#000000^"
   fi
 	stat=$stat"$battery%"
-
   stat=$stat"^c#555555^^b#000000^]"
 
   xsetroot -name "$stat"
-	sleep 60
+  sleep 4
 done
+# vim: tw=0

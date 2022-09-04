@@ -1,17 +1,14 @@
 #! /bin/sh
-# brightness control.
-# increments in powers of two
 
 level=`xbacklight -get | cut -d '.' -f 1`
 case $1 in
 	?u)
-		if [ $level -eq 0 ]; then
-			level=1
-		elif [ $level -gt 100 ] || [ $level -eq 64 ] ; then
-			level=100
-		elif [ $level -lt 100 ]; then
-			level=$((level * 2)) 
-		fi
+		if [ $level -eq 0 ] 
+    then
+      level=1
+    else
+      level=$(($level * 2))
+    fi
 		;;
 	?d) 
 		if [ $level -eq 100 ]; then
@@ -22,6 +19,7 @@ case $1 in
 		;;
 esac
 xbacklight -set $level
+level=`xbacklight -get | cut -d '.' -f 1`
 
 notify-send " " -h int:value:$level -h string:synchronous:volume \
 	-a "scripts/bright"

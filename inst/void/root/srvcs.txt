@@ -1,6 +1,5 @@
 acpid
 dbus
-i8kmon
 isc-ntpd
 ntpd
 sshd

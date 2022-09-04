@@ -8,10 +8,10 @@ get_latest_release() {
 
 rel=`get_latest_release DAINRA/ungoogled-chromium-void`
 file=ungoogled-chromium-`echo $rel | cut -d"v" -f2`.x86_64.xbps
-#curl -LO https://github.com/DAINRA/ungoogled-chromium-void/releases/download/$rel/$file
-#
-#command xbps-rindex -a *.xbps
-#command sudo xbps-install -y -vR $PWD ungoogled-chromium
+curl -LO https://github.com/DAINRA/ungoogled-chromium-void/releases/download/$rel/$file
+
+command xbps-rindex -a *.xbps
+command sudo xbps-install -y -vR $PWD ungoogled-chromium
 
 rm $file
 rm *repodata

@@ -10,3 +10,4 @@ echo $u
 
 command mount $dev /mnt
 command cp -R /mnt/home/* /home/$u/
+command mkdir /home/$u/.runtime

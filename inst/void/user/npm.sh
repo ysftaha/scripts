@@ -2,5 +2,5 @@
 . ../func.sh
 while read pkg
 do
-  command npm install -g $pkg
+  command sudo npm install -location=global $pkg
 done < $1

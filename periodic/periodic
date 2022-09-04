@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd /home/u/git/scripts/periodic
+n=periodic
+scripts=`/bin/ls | sed "/$n/d"`
+for i in $scripts
+do
+  sh $i
+done

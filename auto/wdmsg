@@ -1,2 +1,2 @@
 #!/bin/sh
-watch --color -t "~/git/scripts/alias/dmsg | tail -n 11"
+watch --color -t "~/git/scripts/alias/dmsg | tail -n 64"

@@ -1,0 +1,15 @@
+#! /bin/sh
+wtime=25
+btime=5
+vol=60
+[ ! -z "$1" ] && vol=$1
+[ ! -z "$2" ] && wtime=$2
+[ ! -z "$3" ] && btime=$3
+
+while true
+do
+  pomo $wtime"m" "PSESS: Break." $vol  && \
+  snore $wtime"m"                      && \
+  pomo $btime"m" "PSESS: Work." $vol   && \
+  snore $btime"m"
+done

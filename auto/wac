@@ -1,0 +1,18 @@
+#!/bin/sh
+# vim: tw=0
+XAUTHORITY="/home/u/.runtime/Xauthority"
+DISPLAY=":0"
+export XAUTHORITY DISPLAY
+
+xsetwacom set "Wacom Intuos S Pen stylus" Mode "Relative"
+
+xsetwacom set "Wacom Intuos S Pen stylus" Button 2 "pan"
+xsetwacom set "Wacom Intuos S Pen stylus" Button 3 "pan"
+xsetwacom set "Wacom Intuos S Pen stylus" PanScrollThreshold 100
+# xsetwacom set "Wacom Intuos S Pen stylus" Rotate cw
+
+xsetwacom set "Wacom Intuos S Pad pad" Button 1 "key +ctrl + shift r -ctrl -shift" # selction
+xsetwacom set "Wacom Intuos S Pad pad" Button 2 "key +ctrl + shift p -ctrl -shift" # pen
+xsetwacom set "Wacom Intuos S Pad pad" Button 3 "key +ctrl + shift i -ctrl -shift" # line 
+
+#xsetwacom set "Wacom Intuos S Pad pad" Button 8 "key +alt v -alt o o Right Up Up Up"

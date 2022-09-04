@@ -1,0 +1,3 @@
+#! /bin/sh
+dwmc viewex 10
+st -e xev

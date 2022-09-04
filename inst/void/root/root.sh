@@ -8,7 +8,7 @@ sh userp.sh "u:wheel,audio,disk,socklog"
 sh wheelp.sh
 
 # Migrate backup to user
-sh migrate.sh "/dev/sdb1:u"
+sh migrate.sh "/dev/sda:u"
 
 # Creating config symbolic links for config repository
 # (some configs might be linked globaly in etc)
