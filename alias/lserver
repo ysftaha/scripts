@@ -1,0 +1,2 @@
+#!/bin/sh
+live-server --browser="browse-url"

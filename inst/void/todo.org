@@ -1,3 +1,4 @@
 * DONE mime symlink .config/applications -> .local/share/applications
+* TODO SSH keys
 * TODO ungoogled in chrome://settings toggle clear cookies
 * TODO ungoogled_chromium plugins
