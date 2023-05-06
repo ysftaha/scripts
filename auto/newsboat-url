@@ -1,0 +1,8 @@
+#! /bin/sh
+
+[ $1 = '' ] && exit 1
+
+nohup firefox --new-window "$1" &> /dev/null
+tput reset
+rm nohup.out
+echo -ne '\033]0;newsboat\007'

@@ -2,7 +2,6 @@ acpid
 dbus
 isc-ntpd
 ntpd
-sshd
 uuidd
 wpa_supplicant
 bluetoothd 

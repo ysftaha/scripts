@@ -28,10 +28,12 @@ mousepad
 ripgrep
 tree
 unzip
+zstd
 ruby
 ruby-devel
 zip
 clang
+gccfortran
 lldb
 rr
 apache-ant
@@ -41,6 +43,7 @@ xclip
 Bear
 dict
 dictd
+words-en
 wget
 bat
 mpv
@@ -65,13 +68,13 @@ bitlbee
 aspell-devel
 aerc
 newsboat
-qutebrowser
 cmus
 cmus-opus
 cmus-faad
 cmus-pulseaudio
 picom
 dunst
+elogind
 dcron
 anki
 
@@ -146,3 +149,30 @@ xf86-video-intel
 
 wmctrl
 fwupd
+owncloudclient
+exfat-utils 
+fuse-exfat
+
+shellcheck
+
+net-tools
+
+cpupower
+hwinfo
+slock
+pwgen
+xdg-user-dirs
+opensmtpd
+firefox-esr
+pass
+pass-otp
+opendoas
+typioca
+
+libexif-devel
+giflib-devel
+libwebp-devel                                                                                                                                    │
+imlib2-devel
+pango-devel
+cairo-devel
+python3-gobject-devel

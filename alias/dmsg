@@ -1,2 +1,4 @@
 #! /bin/sh
-sudo dmesg --color=always -T
+# Wrapper for dmesg.
+# NOTE: Dependencies: dmesg
+doas dmesg --color=always -T

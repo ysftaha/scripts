@@ -1,0 +1,6 @@
+#! /bin/sh
+export DISPLAY=:0 
+export XAUTHORITY=/home/u/.runtime/Xauthority
+
+notify-send.sh -t 0 -u critical -a Alert '' "$1"
+sh /home/u/git/scripts/alias/alarm

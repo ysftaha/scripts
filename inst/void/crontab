@@ -1,0 +1,9 @@
+# PRAYER START
+04 21 11 sep * /home/u/git/scripts/auto/prayer-notify "isha"
+53 19 11 sep * /home/u/git/scripts/auto/prayer-notify "maghrib"
+04 17 11 sep * /home/u/git/scripts/auto/prayer-notify "asr"
+34 13 11 sep * /home/u/git/scripts/auto/prayer-notify "duhr"
+07 7 11 sep * /home/u/git/scripts/auto/prayer-notify "sunrise"
+35 5 11 sep * /home/u/git/scripts/auto/prayer-notify "fajir"
+# PRAYER END
+*/30 * * * * /home/u/git/scripts/auto/bat-notif

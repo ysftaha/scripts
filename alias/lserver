@@ -1,2 +1,2 @@
 #!/bin/sh
-live-server --browser="browse-url"
+live-server --browser="$AUTO/browse-url"

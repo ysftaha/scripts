@@ -1,0 +1,15 @@
+#!/bin/sh
+cd -- "${0%/*}" || exit 1
+. ../header
+
+id="$2"
+if ! is_interactive ; then
+  echo "[Error] Not an interactive terminal."
+  exit 1
+fi
+
+for i in $(xdotool search --all --name ^"$1"$); do
+  xdotool set_window --name 'st' "$i"
+done
+[ -n "$id" ] && touch "$id" && xdotool getactivewindow | tee "$id"
+xdotool set_window --name "$1" "$(xdotool getactivewindow)"

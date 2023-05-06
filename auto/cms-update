@@ -1,0 +1,17 @@
+#!/bin/sh
+stat=$(cmus-remote -Q)
+IFS=''
+
+title=$( echo "$stat" |grep title        |cut -d ' ' -f 3-)
+trackn=$( echo "$stat"|grep tracknumber  |cut -d ' ' -f 3-)
+artist=$(echo "$stat" |grep -m 1 artist  |cut -d ' ' -f 3-)
+album=$( echo "$stat" |grep album        |cut -d ' ' -f 3-)
+
+case $(cmus-remote -Q | head -1) in
+  *playing)
+    notify-send.sh -u low -t 3000 -a "$title" "$trackn" "$artist"
+    ;;
+  *)
+    :
+    ;;
+esac

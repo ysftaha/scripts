@@ -1,0 +1,59 @@
+#!/bin/sh
+user=Ghoyome
+bak="$HOME/.config/newsboat/bak"
+out="$HOME/.config/newsboat/hn-fav.rss"
+
+# TODO: This should be logged (after building the logging interface).
+# TODO: Add a timeout.
+
+# Wait until connected to internet.
+while ! curl --silent 'google.ca' -o /dev/null; do
+  echo 'no internet connection'
+  sleep 10
+done
+
+
+mv "$out" "$bak/fav.$(date +%m-%d-%y).bak"
+
+write() { echo "$1" >> "$out"; }
+
+setup() {
+  printf '' > "$out"
+  write '<?xml version="1.0" encoding="UTF-8"?>'
+  write '<rss version="2.0">'
+  write	'<channel>'
+  write '<title>Hacker News Favorites</title>'
+}
+
+setup 
+
+tmp=$(mktemp)
+i=1
+
+while :
+do
+  url="https://news.ycombinator.com/favorites?id=$user&p=$i"
+  curl -sS "$url" | htmlq  --pretty 'span.titleline>a'| sed 's/<a href/\n<a href/g' > "$tmp"
+  sed -i '1d' "$tmp"
+
+  if [ ! -s "$tmp" ]; then
+    echo "stopped at page $((i - 1))"
+    write "</channel>"
+    write "</rss>"
+    exit 0
+  fi
+
+  while read -r line
+  do
+    link=$(echo "$line" | cut -d '"' -f 2)
+    title=$(echo "$line" | cut -d '>' -f 2 | cut -d '<' -f 1)
+    write "<item>"
+    write "<title>$title</title>"
+    write "<link>$link</link>"
+    write "</item>"
+  done < "$tmp"
+
+  i=$((i+1))
+  rm "$tmp"
+  sleep 31 # see https://news.ycombinator.com/robots.txt
+done &

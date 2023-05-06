@@ -1,0 +1,5 @@
+#!/bin/sh
+a=`free -h --si | sed -n '/Mem/p' | sed 's/\s\+/ /g' | cut -d' ' -f 3`
+b=`echo $a|tr -d '[:alpha:]'`
+c=`echo $a|tr -d '[:digit:].'`
+echo $b'^c#00d787^'$c

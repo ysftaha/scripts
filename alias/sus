@@ -1,24 +1,32 @@
 #! /bin/sh
+# NOTE: Dependencies: rfkill, rtcwake, dwmc
+# NOTE: see alarm-loop
+# NOTE: see ../periodic/periodic
+# TEST:
 
-sound_alarm() {
-  org_vol=`pulsemixer --get-volume | cut -d' ' -f 1`
-  mut=`pulsemixer --get-mute`
-  vol=80
-  sleep 1                                            &&\
-    pulsemixer --unmute --set-volume $vol            &&\
-    mpv $BEEP --no-terminal                          &&\
-    pulsemixer --set-volume $org_vol                 &&\
-    [ $mut -eq 1 ] && pulsemixer --mute              &
-  sleep 1
+parse() {
+  ret=$(echo "$@" | grep -o "[[:digit:]]\+$2" | tr -d "$2" | paste -sd+ | bc -l)
+  echo "${ret:-0}"
 }
 
-a=`date -u --date="$(date) +$1" +%s`
-sudo rfkill block bluetooth
-sudo rtcwake -a -m mem --time $a && \
-sudo rfkill unblock bluetooth
+duration() {
+  hrs=$(parse "$1" h)
+  min=$(parse "$1" m)
+  sec=$(parse "$1" s)
+
+  echo "${hrs}hours ${min}minutes ${sec}seconds"
+}
+
+dur=$(duration "$@")
+
+alarm-loop 70
+sleep 1
+
+doas rfkill block bluetooth
+doas rfkill block wlan
+
+doas rtcwake -a -m mem --time "$(date -u --date="$(date) +$dur" +%s)"
 
 sh /home/u/git/scripts/periodic/periodic
-while :
-do 
- sound_alarm
-done
+doas rfkill unblock bluetooth
+doas rfkill unblock wlan

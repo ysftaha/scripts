@@ -1,0 +1,5 @@
+#!/bin/sh
+# vim: tw=0
+
+avg=$(echo "scale=1\n`cpufreq-info -f`/1000000" | bc -l)
+printf "%3s^c#00d787^GHz^c#ffffff^\n" $avg

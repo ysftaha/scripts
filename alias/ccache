@@ -3,10 +3,10 @@
 sync;
 
 # free page cache
-echo 1 | sudo tee /proc/sys/vm/drop_caches;
+echo 1 | doas tee /proc/sys/vm/drop_caches;
 
 # free dentries and inodes
-echo 2 | sudo tee /proc/sys/vm/drop_caches
+echo 2 | doas tee /proc/sys/vm/drop_caches
 
 # free page cache, dentries and inodes
-echo 3 | sudo tee /proc/sys/vm/drop_caches
+echo 3 | doas tee /proc/sys/vm/drop_caches

@@ -2,7 +2,6 @@ wheel
 neovim
 pdftotext
 opencv-python
-ankivim
 termcolor
 vdirsyncer
 khal
@@ -12,4 +11,3 @@ ueberzug
 speedtest-cli
 git+https://github.com/flyingrub/scdl
 wpm
-chs

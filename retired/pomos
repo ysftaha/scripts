@@ -1,4 +1,5 @@
 #! /bin/sh
+# FIXME Just use pgrep
 proc=`ps --no-headers -C pomo o pid,args | sed "s/\/.*pomo //g" | fzf`
 proc_pid=`echo $proc | cut -d" " -f1`
 [ ! $proc_pid ] &&

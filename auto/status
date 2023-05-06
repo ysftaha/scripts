@@ -1,5 +1,9 @@
 #!/bin/sh
-# TODO Refactor this crap into functions
+# PERF: Convert to interrupt system https://en.wikipedia.org/wiki/Interrupt
+# TODO: Refactor this crap into functions
+# FIXME: use pgrep -a PSESS for pomo_time.
+#        NVM: just remove pomo. Write a pomos script
+#             that parses crontab.
 pomo_time() {
   local proc=`ps --no-headers -C pomo o pid,args | sed -e "s/\/.*pomo //g" -e 's/^\s*//' | grep 'PSESS'`
   local prefix=''
@@ -16,7 +20,10 @@ pomo_time() {
 
   local proc_pid=`echo "$proc" | cut -d" " -f1`
   local pom_stat=`echo "$proc" | cut -d':' -f 2 | cut -d'.' -f 1 | cut -d' ' -f 2`
-  local pmo_time=`tail -1 /proc/$proc_pid/fd/1 | rev | cut -d" " -f2 | rev`
+  local snore_out=`tail -1 /proc/$proc_pid/fd/1 `
+  local pmo_time=`echo $snore_out | rev | cut -d" " -f2 | rev |tr -d 'm'` #00
+  local pmo_hours=`echo $snore_out| rev | cut -d" " -f3 | rev|tr -d 'h'` #00
+  local pmo_time=`echo $(($pmo_time+$pmo_hours*60))`m
 
   # Work
   [ "$pom_stat" = "Break" ] && prefix='^c#ffffff^^b#00005f^'
@@ -45,12 +52,12 @@ do
   # │ Date │
   # └──────┘
   timesep="^c#555555^^b#000000^:^c#ffffff^"
-	stat=$stat"`date +%I$timesep%M`$suffix"
+	stat=$stat"`date +%H$timesep%M`$suffix"
 
   # ┌──────────────┐
   # │ System stats │
   # └──────────────┘
-  stat="$stat $prefix^c#ffffff^`free -h --si | sed -n '/Mem/p' | sed 's/\s\+/ /g' | cut -d' ' -f 3`"'^c#555555^|^c#FFFFFF^'
+  stat="$stat $prefix^c#ffffff^`sh $AUTO/mem` ^c#ffffff^`sh $AUTO/avgfreq` `sh $AUTO/cnsmp`^c#00d787^W"'^c#555555^|^c#FFFFFF^'
 
   (mpstat 4 1 | tail -n 1 | rev | cut -d' ' -f 1 | rev | cut -d'.' -f 1 | tee /tmp/idle.dat) &
 
@@ -62,13 +69,8 @@ do
     usage=0
   fi
 
-  if [ ${#usage} -le 1 ] 
-  then
-    usage=" $usage"
-  else
-    usage="$usage"
-  fi
-  
+  # FIXME update to usage=`printf "%2s\n" $usage`
+  usage="`printf "%2s\n" $usage`"
   stat="$stat^c#ffffff^$usage% ^c#555555^@^c#FFFFFF^ `sensors | sed -n '/Package id/p' | cut -d'.' -f 1 | cut -d'+' -f2`°$suffix"
 
   # ┌────────┐
@@ -82,11 +84,14 @@ do
   # │ Headphone/earphone Battery │
   # └────────────────────────────┘
   stat="$stat $prefix"
+  cbat=`bluetoothctl info A6:A3:DE:FA:C2:07|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
+  [ $cbat -lt 50 ] && [ -n "$cbat" ] && stat="$stat$cbat%$gray$sep$norm"
+
   hbat=`bluetoothctl info 94:DB:56:D5:44:21|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
-  [ -n "$hbat" ] && stat="$stat$hbat%$gray$sep$norm"
+  [ $hbat -lt 50 ] && [ -n "$hbat" ] && stat="$stat$hbat%$gray$sep$norm"
 
   ebat=`bluetoothctl info F4:BC:DA:77:AA:49|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
-  [ -n "$ebat" ] && stat="$stat$ebat%$gray$sep$norm"
+  [ $ebat -lt 50 ] && [ -n "$ebat" ] && stat="$stat$ebat%$gray$sep$norm"
 
   # ┌──────────────────┐
   # │ Keyboard Battery │
@@ -97,7 +102,7 @@ do
     attr='/org/bluez/hci0/dev_FF_48_DE_58_48_B5/service0010/char0011'
     kbathex=`echo "menu gatt\nattribute-info $attr\nquit\n"|bluetoothctl|/bin/grep -A 1 "Value:"|tail -1|cut -d' ' -f3` 
     kbat=`echo $((0x$kbathex))`
-    [ -n "$kbat" ] && stat="$stat$kbat%$gray$sep$norm"
+    [ $kbat -lt 50 ] && [ -n "$kbat" ] && stat="$stat"K:$kbat%"$gray$sep$norm"
   fi
 
   # ┌─────────┐
@@ -106,18 +111,17 @@ do
   [ -f /sys/class/power_supply/BAT0/capacity ] && battery=`cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity`
   batstat=`cat /sys/class/power_supply/BAT0/status`
   stat=$stat
-  if [ $battery -ge 99 ]
+  if [ "$batstat" = 'Full' ]
   then
 		stat=$stat"^c#00af87^^b#000000^"
-  # FIXME uncomment when new battery is installed
-  #  id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery fully charged"`
-  elif [ $battery -lt 20 ]
+    id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery fully charged"`
+  elif [ $battery -lt 10 ]
   then
 		stat=$stat"^b#FF0000^^c#ffffff^"
     [ ! $batstat = "Charging" ] && id=`notify-send.sh -p -r "$id" -u critical -a scripts/status "Battery critically low"`
   elif [ $battery -lt 75 ]
   then
-		stat=$stat"^c#ff8700^^b#000000^"
+		stat=$stat"^c#000000^^b#DDDD00^"
   fi
 	stat=$stat"$battery%"
   stat=$stat"^c#555555^^b#000000^]"

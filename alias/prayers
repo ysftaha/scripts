@@ -1,0 +1,15 @@
+#!/bin/sh
+cron_file=/home/u/git/scripts/res/out.cron
+
+d=$(date +%-j)
+# first line of prayers (Fajir)
+d=$((d * 6 - 5)) 
+
+IFS=','
+prayers='Fajr,Duhr,Asr,Maghrib,Isha'
+for i in $prayers; do
+  # Next 7 days:
+  p=$(sed -n "$d,$((d+40)) { /$i/p; }" $cron_file)
+  printf '%s: ' "$i"
+  echo "$p" | awk -F ' ' 'BEGIN{a=   0}{if ($2$1>a) a=$2$1} END{print a}'
+done

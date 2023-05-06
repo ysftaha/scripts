@@ -1,25 +1,8 @@
 #! /bin/sh
 
-level=`xbacklight -get | cut -d '.' -f 1`
-case $1 in
-	?u)
-		if [ $level -eq 0 ] 
-    then
-      level=1
-    else
-      level=$(($level * 2))
-    fi
-		;;
-	?d) 
-		if [ $level -eq 100 ]; then
-			level=64
-		elif [ $level -gt 0 ]; then
-			level=$((level / 2)) 
-		fi
-		;;
-esac
-xbacklight -set $level
-level=`xbacklight -get | cut -d '.' -f 1`
+sleep 0.3
+level=`cat /sys/class/backlight/intel_backlight/brightness`
+level=`echo $level/10|bc -l`
 
-notify-send " " -h int:value:$level -h string:synchronous:volume \
-	-a "scripts/bright"
+notify-send -t 1000 " " -h int:value:$level -h string:synchronous:volume \
+	-a "levels/bright" 

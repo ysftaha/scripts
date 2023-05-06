@@ -1,0 +1,7 @@
+#!/bin/sh
+a=$(echo "`/bin/cat /sys/class/power_supply/BAT0/current_now` * `/bin/cat /sys/class/power_supply/BAT0/voltage_now`"|bc -l)
+a=$(echo "scale=1\n$a/1000000000000" | bc -l)
+
+[ "`echo "$a>10"|bc -l`" = '1' ] && pre='^b#FF0000^'
+
+printf "$pre%4s^b#000000^" "$a"

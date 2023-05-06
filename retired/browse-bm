@@ -1,4 +1,4 @@
 #! /bin/sh
 query=`cat ~/.config/bm.txt | dmenu -i | cut -d ' ' -f1`
 [ -z "`echo $query | grep ':'`" ] && prefix="https://"
-[ "$query" != '' ] && (echo "--app=$prefix$query" | xargs -r -0 ungoogled-chromium)
+[ "$query" != '' ] && (firefox --new-window "$prefix$query")

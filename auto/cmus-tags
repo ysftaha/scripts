@@ -1,0 +1,10 @@
+#!/bin/bash
+file="$(cmus-remote -C 'echo {}')"
+ 
+if [ -f "$file" ]
+then
+  file="`echo "$file" | sed 's/ /\\ /g'`"
+  st -e /bin/kid3-cli "$file" &
+else
+  echo "Oops, couldn't find selected track" >&2
+fi

@@ -1,0 +1,2 @@
+#!/bin/sh
+st -t typetest -e gotta-go-fast ~/tmp/downloads/quotes.en/*

@@ -1,0 +1,8 @@
+#!/bin/sh
+# add to playlist
+cd $XDG_CONFIG_HOME/cmus/playlists
+ls | dmenu -l 10 -w $WINDOWID
+
+# view 3
+# win-update
+# xdotool key y enter

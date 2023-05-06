@@ -1,2 +1,15 @@
 #! /bin/sh
-bat --tabs 2 -n --color always "$@"
+#ext=`echo $@|rev|cut -d '.' -f 1|rev` 
+mtype=$(mimetype -L "$@" | cut -d ':' -f 2 | tr -d ' ' | cut -d '/' -f 1)
+fname=$(echo "$1" | rev | cut -d '/' -f 1 | rev)
+case $mtype in
+  *image*)
+    chafa --size=60x -w 1 "$@"
+    ;;
+  *audio | video*)
+    kid3-cli -c 'get' "$fname"
+    ;;
+  *)
+    bat --tabs 2 -n --color always --terminal-width -17 "$@"
+    ;;
+esac

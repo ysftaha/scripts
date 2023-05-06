@@ -1,0 +1,8 @@
+#!/bin/sh
+# TODO: Generalize xdotool to a function that disables the keyboard (defined in
+# the header) before and after op.
+# NOTE:Dependencies: xinput, xdotool
+# TEST:
+cd -- "${0%/*}" || exit 1
+. ../header
+send_keys "$(cat /tmp/termid.dat)" 'Escape' 'ctrl+c' 'ctrl+p' 'Enter'

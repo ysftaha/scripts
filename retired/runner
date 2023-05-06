@@ -19,9 +19,16 @@ fpth = sys.argv[3]
 ppth = sys.argv[4]
 fname = fpth.split(".")[0].split("/")[-1]
 
+termid = "/tmp/termid.dat"
+with open(termid) as wid:
+    lines = wid.read()
+wid = int(lines)
+
+prefix=f" xdotool type --window {wid} "
+suffix=f" && xdotool key --window {wid} Enter "
+
 hsh = {
-    "": f"cd {pth} && sh {fpth} "
-    + ""
+    "sh": f"xdotool type --window {wid} 'cd {pth} && sh {fpth} /home/u/git/scripts/alias/usage' {suffix}"
     ,
 
     "lex": f"cd {pth} && jlex {fname}.lex"
@@ -32,9 +39,10 @@ hsh = {
     + ""
     ,
 
-    "c": f"cd {pth} && clang -g -std=c17 -fsanitize=address -pedantic {fpth} -Wall -o {fname} -lbluetooth"
-    + f"&& ./{fname} addresses.txt" 
-    + ""
+    "c": f"xdotool key --window {wid} ctrl+c && xdotool type --window {wid} 'python3 -m http.server -d build-sim' {suffix}"
+    ,
+
+    "h": f"xdotool key --window {wid} ctrl+c && xdotool type --window {wid} 'emmake make && python3 -m http.server -d build-sim' {suffix}"
     ,
 
     "cpp": f"cd {pth} && clang++ -g -std=c++17 {fpth} -Wall " 
@@ -42,17 +50,13 @@ hsh = {
     + ""
     ,
 
-    "go": f"go run {fpth} " # use go build {fpth} for an executable
+    "go": f"xdotool type --window {wid} 'go build timer.go && ./timer -t test -e \"alarm 20\" 5m' && xdotool key --window {wid} Enter" # use go build {fpth} for an executable
     ,
 
-    "py": f"python {fpth} ",
+    "py": f"{prefix} 'cd {pth} && python {fpth}|copy' {suffix}",
 
     "hs": f"cd {pth} && ghc -dynamic {fpth} -outputdir /tmp -o out"
     + f"&& ./out "
-    + ""
-    ,
-
-    "sh": f"cd {pth} && sh {fpth} "
     + ""
     ,
 

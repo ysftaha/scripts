@@ -1,3 +1,18 @@
 #! /bin/sh
-sudo zzz # suspending for now until the resume bug is resolved
-sh /home/u/git/scripts/periodic/periodic
+# hib short for hibernate
+# NOTE: Dependencies: ZZZ
+cd -- "${0%/*}" || exit 1
+. ../header
+# Recording screen
+# for i in $(wmctrl -l)
+# do
+#   [ "$i" = sc-cast-recording ] && \
+#     notify-send.sh   \
+#       -u critical    \
+#       -a "Hibernate" \
+#       ""             \
+#       "<b>[ABORTED]</b> Recording in progress" && \
+#     exit 1
+# done
+doas ZZZ
+sh "$scripts"/periodic/periodic

@@ -1,0 +1,6 @@
+#!/bin/sh
+# Wrapper for $AUTO/stt. Assigns build terminal.
+# TEST:
+cd -- "${0%/*}" || exit 1
+. ../header
+sh ./stt "outst" "/tmp/termid.dat"

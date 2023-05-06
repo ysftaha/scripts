@@ -1,5 +1,5 @@
 #! /bin/sh
-sudo rfkill unblock bluetooth
+doas rfkill unblock bluetooth
 sleep 1
 bluetoothctl power on
 sleep 2

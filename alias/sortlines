@@ -1,2 +1,3 @@
 #!/bin/sh
-awk '{ print length(), $0 | "sort -rn | cut -d\\  -f2-" }' $1
+# TEST:
+awk '{ print length(), $0 | "sort -rn | cut -d\\  -f2-" }' "$1"

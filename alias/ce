@@ -1,0 +1,2 @@
+#!/bin/sh
+setsid st -n crontab -e crontab -e &

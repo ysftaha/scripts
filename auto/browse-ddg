@@ -1,3 +1,0 @@
-#! /bin/sh
-query=`echo | dmenu -sb '#000000' -l 0`
-[ "$query" != '' ] && (echo "--app=https://duckduckgo.com/?q=$query" | xargs -r -0 ungoogled-chromium)

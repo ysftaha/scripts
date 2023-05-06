@@ -1,0 +1,15 @@
+#!/bin/sh
+# NOTE: Dependencies: dmenu
+# TEST:
+cd -- "${0%/*}" || exit 1
+. ../header
+
+IFS=''
+procs=$(ps xk-%mem o %mem,pid,comm | head -$USAGE_LENGTH)
+
+# TODO: Change interactive check to a flag in case of piping in the future.
+if is_interactive; then
+  echo "$procs"
+else
+  echo "$procs" | dmenu -l $USAGE_LENGTH -p 'usage'
+fi

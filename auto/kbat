@@ -1,0 +1,13 @@
+#!/bin/sh
+connected=$(bluetoothctl info FF:48:DE:58:48:B5|grep 'Connected: yes')
+[ -z "$connected" ] && exit 1
+
+attr='/org/bluez/hci0/dev_FF_48_DE_58_48_B5/service0010/char0011'
+comm="menu gatt
+attribute-info $attr
+quit
+"
+kbathex=$(printf "%s" "$comm" | bluetoothctl|/bin/grep -A 1 "Value:"|tail -1|cut -d' ' -f3)
+
+kbat=$((0x$kbathex))
+echo $kbat

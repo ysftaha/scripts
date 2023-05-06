@@ -1,0 +1,49 @@
+#!/bin/sh
+# TODO: Generalize xdotool to a function that disables the keyboard (defined in
+# the header) before and after op.
+# NOTE:Dependencies: xinput, xdotool
+# TEST:
+filename="$1"
+path="${filename%/*}" 
+filename=${filename##*/}
+ext="$2"
+
+wid="$(cat /tmp/termid.dat)"
+comm() {
+  echo "$path"
+  xinput --disable 'keyboard:Corne Keyboard'
+
+  xdotool key --window "$wid" 'Escape'
+  xdotool key --window "$wid" 'ctrl+c'
+  xdotool key --window "$wid" Enter 
+  xdotool type --window "$wid" "wdir='$path'"
+  xdotool key --window "$wid" Enter 
+
+  xdotool type --window "$wid" "(cd \$wdir && "
+  xdotool type --window "$wid" "$*)"
+  xdotool key --window "$wid" Enter 
+
+  xinput --enable 'keyboard:Corne Keyboard'
+}
+case "$ext" in
+  sh)
+    comm "/bin/cat ~/.config/newsboat/saved/tmp | \$AUTO/$filename"
+    ;;
+  c|cpp)
+    comm "cd make && make && emmake make && python3 -m http.server -d build-sim"
+    ;;
+  tex)
+    comm "xelatex -jobname=out -output-directory=/tmp $filename"
+    ;;
+  sql)
+    xdotool key --window "$wid" 'ctrl+c'
+    xdotool type --window "$wid" ".read $filename"
+    xdotool key --window "$wid" 'Enter'
+    ;;
+  '')
+    comm ': "[Error] extension not passed."'
+    ;;
+  *)
+    comm ': "[Info] extension not configured."'
+    ;;
+esac

@@ -1,0 +1,2 @@
+Need to implement a logger. But need to research concurrent file writing.
+Probably look at socklog's source code.

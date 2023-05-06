@@ -1,0 +1,53 @@
+#!/bin/sh
+dt=$(date +%s)
+tmp=$(mktemp)
+script=/home/u/git/scripts/alias/alert
+
+parse() {
+  ret=$(echo "$1" | grep -o "[[:digit:]]\+$2" | tr -d "$2" | paste -sd+ | bc -l)
+  if [ -z "$ret" ]; then
+    echo 0
+  else
+    echo "$ret"
+  fi
+}
+
+parse_delta() {
+  tot=0
+
+  hrs=$(parse "$1" h)
+  min=$(parse "$1" m)
+  sec=$(parse "$1" s)
+
+  tot=$(echo "$sec + $hrs + $min" | bc -l)
+  hrs=$(echo "$hrs * 3600" | bc -l)
+  min=$(echo "$min * 60" | bc -l)
+}
+
+[ -z "$1" ] && printf '[Err] empty or malformed args\n' && exit 1
+
+IFS=' ' read -r delta << EOF
+$1
+EOF
+
+IFS='
+'
+parse_delta "$delta"
+
+ping_time=$(echo "$dt + $tot" | bc -l)
+
+dt=$(date "+%M %H %d %b" --date="@$ping_time)" | tr '[:upper:]' '[:lower:]')
+
+if [ -z "$2" ] 
+then
+  note="pomo $1"
+else
+ shift 1
+ note=$(echo "$@" | tr '\n' ' ')
+fi
+
+crontab -l > "$tmp"
+ln="$dt * $script '$note'"
+sed -i "/^# TIMERS START/a $ln" "$tmp" # add in reverse chronological order
+crontab "$tmp"
+rm "$tmp"

@@ -1,0 +1,5 @@
+#!/bin/sh
+file="$(cmus-remote -C 'echo {}')"
+file="`echo "$file" | sed 's/ /\\ /g'`"
+dwmc togglescratchterm
+lf -remote "send select '${file}'"

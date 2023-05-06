@@ -1,0 +1,52 @@
+#! /bin/sh
+fav="$XDG_CONFIG_HOME"/newsboat/fav.rss
+tmp=$(echo 'mkstemp(/tmp/fav-rssXXXXXX)' | m4)
+
+tee "$tmp" > /dev/null
+
+title=$(/bin/grep -m 1 "Title: " "$tmp")
+title="${title##Title: }"
+
+RED='\033[0;31m'
+NC='\033[0m' # N
+echo "$NC $title $RED"
+
+link=$(/bin/grep -m 1 "Link: htt.*" "$tmp")
+link="${link##Link: }"
+link=$(echo "$link"|sed 's/http:/https:/')
+#echo "$link"
+
+if [ "$(grep -c -Fx "$title" "$fav")" = 1 ]
+then
+  echo "[Err] entry exists"
+  exit 1
+fi
+
+content=$(elinks "$link" -force-html -dump -dump-width 145 -dump-charset ascii)
+content=$(echo "$content"| sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g')
+
+{
+  echo "<entry>"
+
+  echo "<title>"
+  echo "$title"
+  echo "</title>"
+
+  printf "<link href=\""
+  printf "%s\" \\>" "$link"
+
+  echo "<content type=\"xhtml\"><pre>"
+  echo "$content"
+  echo "</pre></content>"
+
+  echo "</entry>"
+} >> "$fav"
+chmod 600 "$fav"
+
+case "$link" in
+  *ycombinator*)
+    sleep 32
+    ;;
+esac
+
+rm "$tmp"

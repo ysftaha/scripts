@@ -1,0 +1,22 @@
+#! /bin/bash
+
+org_vol=`pulsemixer --get-volume | cut -d' ' -f 1`
+mut=`pulsemixer --get-mute`
+brf="$2"
+vol=$3
+out=`mktemp`
+
+[ ! "$brf" ] && brf="Break."
+[ ! "$vol" ] && vol=30
+
+echo "Timer: $1"
+echo "Breif: $brf"
+echo "vol: $vol"
+
+nohup snore -d $1 > $out                            &&\
+  rm -r $out                                        &&\
+  notify-send.sh -u critical -a scripts/pomo "$brf" &&\
+  pulsemixer --unmute --set-volume $vol             &&\
+  mpv --volume=100 $BEEP --no-terminal              &&\
+  pulsemixer --set-volume $org_vol                  &&\
+  [ $mut -eq 1 ] && pulsemixer --mute & echo $!

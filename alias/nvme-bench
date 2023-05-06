@@ -1,2 +1,11 @@
 #!/usr/bin/sh
-sudo hdparm -Tt --direct /dev/nvme0n1
+# Quick 
+# TODO: Log to establish trends:
+#       * adding to periodic scripts could work.
+#       * maybe track with socklog directly.
+# PERF: SSD degradation is the main reason the statusbar script should be a
+# collection of interrupt components rather than a polling loop. Need to
+# investigate more with `lsof` and establish a trend to determine if it's worth
+# it.
+# TEST:
+doas hdparm -Tt --direct /dev/nvme0n1

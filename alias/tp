@@ -1,3 +1,7 @@
 #! /bin/sh
-xdotool mousemove 1920 0
-$AUTO/devtoggle --toggle 'DLL07BE:01 06CB:7A13 Touchpad'
+# NOTE: Dependencies: xdotool, see $AUTO/devtoggle
+# TEST:
+cd -- "${0%/*}" || exit 1
+. ../header
+xdotool mousemove 0 1080
+"$AUTO"/devtoggle 'DLL07BE:01 06CB:7A13 Touchpad'

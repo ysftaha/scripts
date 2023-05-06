@@ -26,3 +26,5 @@ und "Rebuilding itramfs for intel microcode"
 command xbps-reconfigure -f linux$(uname -r | cut -d '.' -f 1,2)
 
 command modprobe acpi_call
+
+command xdg-user-dirs-update

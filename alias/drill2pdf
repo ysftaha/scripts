@@ -1,0 +1,14 @@
+#!/bin/sh
+org_file=$1
+out_file="pdf/${org_file%%.org}.pdf.org"
+[ ! -d pdf ] && mkdir -p pdf
+[ -e "$out_file" ] && doas rm "$out_file"
+
+sed -e '/^#+/d' \
+-e '/^\* Startup/,$d' \
+-e '/^.$/d' \
+-e '/^\** Back/d' \
+-e 's/:drill://' \
+-e 's/[[:blank:]]*$//' $org_file > $out_file
+
+emacs "$out_file" --batch --eval "(setq org-latex-toc-command nil)" -f org-latex-export-to-pdf --kill

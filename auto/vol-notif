@@ -10,7 +10,7 @@ if [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ]; then
 fi
 
 notify-send "Vol: $string" \
-    -a 'scripts/vol' \
-    -t 2000 \
+    -a 'levels/vol' \
+    -t 1000 \
     -h int:value:$vol \
     -h string:x-dunst-stack-tag:audio

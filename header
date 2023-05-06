@@ -1,0 +1,42 @@
+#! /bin/sh
+scripts=/home/u/git/scripts
+AUTO=/home/u/git/scripts/auto
+
+KB_NAME='keyboard:Corne Keyboard'
+
+REC_DIR=$HOME/doc/rec  # alias/sc-cast
+USAGE_LENGTH=20        # alias/usage
+SUS_VOL=70             # alias/sus
+
+# checks if the calling terminal is interactive.
+# NOTE: This is merely to check if the script is called from dmenu so that 
+# output should be piped through dmenu rather than stdout.
+is_interactive() {
+  [ -t 0 ] && return 0
+  return 1
+}
+
+# TODO: adapt this to the logger when built
+die() {
+  exit 1
+}
+
+send_keys() {
+  wid="$1"
+  shift
+  xinput --disable "$KB_NAME"
+  for i in "$@"; do
+    xdotool key --window "$wid" "$i"
+  done
+  xinput --enable "$KB_NAME"
+}
+
+send_string() {
+  wid="$1"
+  shift
+  xinput --disable "$KB_NAME"
+  for i in "$@"; do
+    xdotool type --window "$wid" "$i"
+  done
+  xinput --enable "$KB_NAME"
+}

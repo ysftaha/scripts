@@ -1,0 +1,10 @@
+#!/bin/sh
+export DISPLAY=:0 
+export XAUTHORITY=/home/u/.runtime/Xauthority
+lvl=$(cut -d '%' -f 1 /sys/class/power_supply/BAT0/capacity)
+batstat=$(cat /sys/class/power_supply/BAT0/status)
+
+[ "$(echo "$lvl < 70" | /bin/bc)" = '1' ] && \
+[ "$batstat" != 'Charging' ] && \
+  notify-send.sh -t 0 -u critical -a scripts/Battery 'Battery below maintenance level'
+exit 0

@@ -3,3 +3,4 @@
 und "GTK theme installation"
 command unzip ../Solarized-BLACK-Cyan_1.3.6.zip
 command sudo mv Solarized-BLACK-Cyan/ /usr/share/themes/
+command xdg-user-dirs-update

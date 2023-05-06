@@ -3,11 +3,21 @@ XAUTHORITY="/home/u/.runtime/Xauthority"
 DISPLAY=":0"
 export XAUTHORITY DISPLAY
 
-xset r rate 200 20
-setxkbmap -model pc105 -layout 'us,ara(mac)' -option grp:alt_shift_toggle
-echo -n 'menu gatt' | bluetoothctl
+xset r rate 300 10 -display $DISPLAY
+setxkbmap -model pc105 -layout 'us,ara(mac)' -option grp:toggle -display $DISPLAY
 
-# bluetoothctl BUG: 
-#   attribute-info does not work until this is invoked once at least
-attr=/org/bluez/hci0/dev_FF_48_DE_58_48_B5/service0010/char0011
-echo "menu gatt\nselect-attribute $attr\nread" | bluetoothctl
+a=$(bluetooth)
+case "$a" in
+  *off*)
+    echo "bluetooth off"
+    ;;
+  *) 
+    printf 'menu gatt' | bluetoothctl
+    # BUG: bluetoothctl attribute-info does not work until this is invoked once
+    attr=/org/bluez/hci0/dev_FF_48_DE_58_48_B5/service0010/char0011
+    com="menu gatt
+    select-attribute $attr
+    read" 
+    printf "%s" "$com" | bluetoothctl
+    ;;
+esac

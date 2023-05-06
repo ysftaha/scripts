@@ -1,2 +1,14 @@
 #!/bin/sh
+xdotool mousemove 1920 0
 maim $HOME/sc-shot.png
+
+prompt=`echo 'y\nn' | dmenu -p 'crop image ?'`
+[ "`echo $prompt | grep -ci 'y'`" = 1 ] && cropgui $HOME/sc-shot.png
+
+prompt=`echo 'y\nn' | dmenu -p 'view sc-shot-crop.png ?'`
+if [ "`echo $prompt | grep -ci 'y'`" = 1 ] 
+then
+  sxiv $HOME/sc-shot-crop.png
+  prompt=`echo 'y\nn' | dmenu -p 'upload to imgur ?'`
+  [ "`echo $prompt | grep -ci 'y'`" = 1 ] && imgurbash2 $HOME/sc-shot-crop.png
+fi

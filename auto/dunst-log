@@ -1,0 +1,27 @@
+#!/bin/python
+import gi.repository.GLib
+import dbus
+from dbus.mainloop.glib import DBusGMainLoop
+import datetime
+import sys
+
+log = sys.argv[1]
+def notifications(bus, message):
+    if message.get_member() != "Notify":
+        return
+    args = message.get_args_list()
+    with open(log, 'a') as sys.stdout:
+        print()
+        print(datetime.datetime.now().strftime("%y.%m.%d %H:%M"))
+        print(args[0])
+        print(args[3])
+        print(args[4])
+
+DBusGMainLoop(set_as_default=True)
+
+bus = dbus.SessionBus()
+bus.add_match_string_non_blocking("eavesdrop=true, interface='org.freedesktop.Notifications', member='Notify'")
+bus.add_message_filter(notifications)
+
+mainloop = gi.repository.GLib.MainLoop()
+mainloop.run()

@@ -1,3 +1,6 @@
 #!/bin/sh
-setsid st -d "$0" > /dev/null 2> /dev/null &
-# dwmc viewex 3
+#_NET_ACTIVE_WINDOW
+dir=$1
+[ -z "$dir" ] && dir=$mdir
+setsid st -d "$dir" > /dev/null 2> /dev/null &
+dwmc viewex 14

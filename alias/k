@@ -1,0 +1,4 @@
+#!/bin/sh
+# k short for killall
+# NOTE: Dependencies: pgrep
+doas kill -9 $(pgrep "$@")
