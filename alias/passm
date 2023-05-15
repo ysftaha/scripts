@@ -7,11 +7,11 @@ case $gpgfile in
     :
     ;;
   *-otp)
-    st -g "60x12+718+456" -t "passm" -t "passm" -e /bin/pass otp -c "$gpgfile"
+    st -g "60x12+660+426" -t "passm" -t "passm" -e /bin/pass otp -c "$gpgfile"
     /bin/pass otp -c "$gpgfile"
     ;;
   *)
-    st -g "60x12+718+456" -t "passm" -e /bin/pass show -c "$gpgfile"
+    st -g "60x12+660+426" -t "passm" -e /bin/pass show -c "$gpgfile"
     /bin/pass show -c "$gpgfile"
     ;;
 esac

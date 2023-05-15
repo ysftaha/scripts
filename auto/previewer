@@ -10,6 +10,6 @@ case $mtype in
     kid3-cli -c 'get' "$fname"
     ;;
   *)
-    bat --tabs 2 -n --color always --terminal-width -17 "$@"
+    bat --tabs 2 -n --color always --terminal-width -20 "$@"
     ;;
 esac

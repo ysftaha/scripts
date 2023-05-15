@@ -1,11 +1,11 @@
 #! /bin/sh
-query=$(cat ~/.config/bm.txt | dmenu -i -l 10 -p 'net')
+query=$(dmenu -i -l 10 -p 'net' < ~/.config/bm.txt)
 [ -z "$query" ] && exit 1
 
-if [ "$(echo "$query" | /bin/grep -c '^http\|^www\.\|\.[[:alpha:]]\+$')" = '1' ] && [ "$(echo "$query" | /bin/grep -c '[[:space:]]')" = '0' ] 
+url=$(echo "$query" | "$AUTO/xurls")
+if [ -n "$url" ]
 then
-  [ "$(echo $query | /bin/grep -c '^http')" != '1' ] && query="https://$query"
-  (firefox --new-window "$query")
+   (firefox --new-window "$url")
 else
-  (firefox --new-window "https://kagi.com/search?q=$query")
+   (firefox --new-window "https://kagi.com/search?q=$query")
 fi
