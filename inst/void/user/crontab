@@ -1,0 +1,21 @@
+# vim: tw=0
+# TIMERS START
+# TIMERS END
+
+# SlEEP/WAKE START
+10 06 * * *   XDG_RUNTIME_DIR=/run/user/1000 /home/u/git/scripts/alias/alarm-loop 60
+#30 21 * * *   XDG_RUNTIME_DIR=/run/user/1000 /home/u/git/scripts/auto/sleep-warn
+# SlEEP/WAKE END
+
+# PRAYER START
+11 22 29 may * /home/u/git/scripts/alias/alert "Isha"
+03 21 29 may * /home/u/git/scripts/alias/alert "Maghrib"
+31 17 29 may * /home/u/git/scripts/alias/alert "Asr"
+35 13 29 may * /home/u/git/scripts/alias/alert "Duhr"
+00 06 29 may * /home/u/git/scripts/alias/alert "sunrise"
+14 04 29 may * /home/u/git/scripts/alias/alert "Fajr"
+# PRAYER END
+
+*/15 * * * *  /home/u/git/scripts/auto/bat-notif
+#*/15 * * * *  /home/u/git/scripts/alias/alert "Timeblock" 3
+0 0 * * *     /home/u/git/scripts/periodic/prayer

@@ -15,7 +15,9 @@ comm() {
 
   xdotool key --window "$wid" 'Escape'
   xdotool key --window "$wid" 'ctrl+c'
+  xdotool key --window "$wid" 'i' 'BackSpace'
   xdotool key --window "$wid" Enter 
+
   xdotool type --window "$wid" "wdir='$path'"
   xdotool key --window "$wid" Enter 
 
@@ -27,10 +29,12 @@ comm() {
 }
 case "$ext" in
   sh)
-    comm "/bin/cat ~/.config/newsboat/saved/tmp | \$AUTO/$filename"
+    comm "sh $filename"
     ;;
-  c|cpp)
-    comm "cd make && make && emmake make && python3 -m http.server -d build-sim"
+  c)
+    ;;
+  cpp)
+    comm "export RUNFILE=$filename; make run"
     ;;
   tex)
     comm "xelatex -jobname=out -output-directory=/tmp $filename"
@@ -41,9 +45,9 @@ case "$ext" in
     xdotool key --window "$wid" 'Enter'
     ;;
   '')
-    comm ': "[Error] extension not passed."'
+    :
     ;;
   *)
-    comm ': "[Info] extension not configured."'
+    :
     ;;
 esac

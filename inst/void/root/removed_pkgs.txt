@@ -1,0 +1,13 @@
+bitlbee-discord
+apache-ant-doc
+gcc-fortran
+apache-ant         # java build system
+net-tools
+opensmtpd
+mousepad
+i8kutils           # dell fans
+bitlbee 
+hwinfo
+zstd               # Compression algorithm 
+crda               # networking shit
+rr                 # cool debugger

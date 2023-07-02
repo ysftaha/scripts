@@ -1,0 +1,5 @@
+#!/bin/python
+import urllib.parse
+import sys
+print(urllib.parse.urlencode({f'{sys.argv[1]}':
+                              f'{sys.argv[2]}'}))

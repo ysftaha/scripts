@@ -1,36 +1,6 @@
 #!/bin/sh
 # PERF: Convert to interrupt system https://en.wikipedia.org/wiki/Interrupt
 # TODO: Refactor this crap into functions
-# FIXME: use pgrep -a PSESS for pomo_time.
-#        NVM: just remove pomo. Write a pomos script
-#             that parses crontab.
-pomo_time() {
-  local proc=`ps --no-headers -C pomo o pid,args | sed -e "s/\/.*pomo //g" -e 's/^\s*//' | grep 'PSESS'`
-  local prefix=''
-
-  if [ -z "$proc" ]
-  then
-    pomot=""
-    return 1
-  elif [ `echo "$proc" | wc -l` -ne 1 ]
-  then
-    pomot="Err"
-    return 1
-  fi
-
-  local proc_pid=`echo "$proc" | cut -d" " -f1`
-  local pom_stat=`echo "$proc" | cut -d':' -f 2 | cut -d'.' -f 1 | cut -d' ' -f 2`
-  local snore_out=`tail -1 /proc/$proc_pid/fd/1 `
-  local pmo_time=`echo $snore_out | rev | cut -d" " -f2 | rev |tr -d 'm'` #00
-  local pmo_hours=`echo $snore_out| rev | cut -d" " -f3 | rev|tr -d 'h'` #00
-  local pmo_time=`echo $(($pmo_time+$pmo_hours*60))`m
-
-  # Work
-  [ "$pom_stat" = "Break" ] && prefix='^c#ffffff^^b#00005f^'
-
-  pomot="$prefix$pmo_time$sep"
-}
-
 touch /tmp/idle.dat
 while true
 do
@@ -43,16 +13,10 @@ do
   sep="^c#555555^^b#000000^|^c#ffffff^"
 
   # ┌──────┐
-  # │ Pomo │
-  # └──────┘
-  pomo_time
-  stat="$stat$prefix$pomot"
-
-  # ┌──────┐
   # │ Date │
   # └──────┘
   timesep="^c#555555^^b#000000^:^c#ffffff^"
-	stat=$stat"`date +%H$timesep%M`$suffix"
+	stat=$prefix"`date +%H$timesep%M`$suffix"
 
   # ┌──────────────┐
   # │ System stats │
@@ -84,13 +48,12 @@ do
   # │ Headphone/earphone Battery │
   # └────────────────────────────┘
   stat="$stat $prefix"
-  cbat=`bluetoothctl info A6:A3:DE:FA:C2:07|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
-  [ $cbat -lt 50 ] && [ -n "$cbat" ] && stat="$stat$cbat%$gray$sep$norm"
 
+  # Headphones
   hbat=`bluetoothctl info 94:DB:56:D5:44:21|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
   [ $hbat -lt 50 ] && [ -n "$hbat" ] && stat="$stat$hbat%$gray$sep$norm"
 
-  ebat=`bluetoothctl info F4:BC:DA:77:AA:49|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
+  ebat=`bluetoothctl info F8:D1:78:E5:1B:C1|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
   [ $ebat -lt 50 ] && [ -n "$ebat" ] && stat="$stat$ebat%$gray$sep$norm"
 
   # ┌──────────────────┐

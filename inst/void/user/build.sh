@@ -1,13 +1,15 @@
 #!/usr/bin/sh
 . ../func.sh
 
-builddir=$1
-for i in `ls $builddir`
+builddir="$HOME/git/.build"
+
+cd "$builddir" || exit
+for i in *
 do
-  if [ ! $i = "other" ] 
+  if [ ! "$i" = "other" ] 
   then
     yellow "Building $i\n"
-    cd $builddir/$i  
+    cd "$builddir/$i" || exit
     make install
   fi
 done

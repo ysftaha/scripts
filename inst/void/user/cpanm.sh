@@ -1,9 +1,7 @@
 #!/usr/bin/sh
 . ../func.sh
 
-for i in `cat $1`
+while read -r pkg
 do
-  cpanm --force --sudo $i
-done
-
-command sudo rm -r $HOME/.cpanm $HOME/.cpan $HOME/perl5
+  command cpanm install "$pkg"
+done < cpanm.txt 

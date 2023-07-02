@@ -1,26 +1,35 @@
 #! /usr/bin/sh
 . ../func.sh
 
-username=`echo $1 | cut -d "/" -f3`
+username=u
+conf_repo="/home/$username/git/conf"
+username=$(echo "$conf_repo" | cut -d "/" -f3)
 conf="/home/$username/.config"
 
 und "Symbolic linking configuration repository"
-mkdir $conf
-for file in `ls $1/config`
+mkdir "$conf"
+
+for file in "$conf_repo"/config/*
 do
-  command "ln -frs $1/config/$file $conf"
+   command ln -frs "$file" "$conf"
 done
 
-# mkdir -p | confpath | rename
-entry() {
-  echo "$line" | tr -d "[:blank:]" | cut -d "|" -f $1
+link() {
+  cd "$conf"/"$1" || exit 
+  find . -type d -print | while read -r i
+  do
+    i="$2${i##.}"
+    [ "${i##.}" != "" ] && mkdir -p "$i"
+  done
+
+  find . -type f -print | while read -r i
+  do
+    i="${i##.}"
+    ln -fs "$conf/$1$i" "$2$i"
+  done
 }
 
-while read line
-do
-  orig="`entry 3``entry 2 |rev| cut -d'/' -f1 |rev`"
-  [ ! -z `entry 5` ] && command rm $orig
-  [ ! -z `entry 1` ] && [ ! -d `entry 3` ] && command mkdir -p `entry 3`
-  command ln -s $conf/`entry 2` `entry 3`
-  [ ! -z `entry 4` ] && command rename `entry 3`/`entry 2` `entry 3`/`entry 4` `entry 3`/`entry 2`
-done < $conf/links.txt
+und "Symbolic linking NON-XDG_CONFIG_HOME files"
+command "link etc /etc"
+#command "link local /home/$username/.local"
+#command "link vim /home/$username/.vim"

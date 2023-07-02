@@ -3,7 +3,7 @@ XAUTHORITY="/home/u/.runtime/Xauthority"
 DISPLAY=":0"
 export XAUTHORITY DISPLAY
 
-xset r rate 300 10 -display $DISPLAY
+xset r rate 300 5 -display $DISPLAY
 setxkbmap -model pc105 -layout 'us,ara(mac)' -option grp:toggle -display $DISPLAY
 
 a=$(bluetooth)

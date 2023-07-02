@@ -1,0 +1,4 @@
+#!/bin/sh
+{ date +%R ; } >> ~/_/log.txt
+xdotool windowactivate "$(wmctrl -l |grep log.txt |cut -d " " -f1)"
+#"$HOME"/.local/bin/st -e nvim -c ':$' ~/_/log.txt

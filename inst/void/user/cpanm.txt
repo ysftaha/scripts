@@ -2,3 +2,4 @@ Text::Aspell
 HTML::Entities
 HTML::Parser
 Neovim::Ext
+App::Cppref

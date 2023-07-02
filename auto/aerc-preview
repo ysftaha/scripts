@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ -n "$1" ]; then
+  bat --tabs 2 -n --color always --file-name "$1"
+else
+  bat --tabs 2 -n --color always
+fi

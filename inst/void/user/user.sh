@@ -1,20 +1,12 @@
 #! /usr/bin/sh
 . ../func.sh
+# TODO: Migrate ~/.local/{package manager shit} to ~/.local/share like ruby 
 
-sh build.sh "$HOME/git/.build"
-
-sh cpanm.sh cpanm.txt
-
+sh build.sh 
+sh cpanm.sh 
 sh doom.sh 
-
 sh gtk-theme.sh
-
-sh pip.sh pip.txt
-
-sh npm.sh npm.txt
-
-sh gem.sh gem.txt
-
-sh ungoogled-chromium.sh
-
+sh pip.sh
+sh npm.sh
+sh gem.sh
 sh nvim.sh

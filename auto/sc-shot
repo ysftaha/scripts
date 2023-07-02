@@ -1,14 +1,15 @@
 #!/bin/sh
 xdotool mousemove 1920 0
-maim $HOME/sc-shot.png
+stamp=$(date +%s)
+maim "$HOME/ss-$stamp.png"
 
-prompt=`echo 'y\nn' | dmenu -p 'crop image ?'`
-[ "`echo $prompt | grep -ci 'y'`" = 1 ] && cropgui $HOME/sc-shot.png
+prompt=$(printf 'y\nn' | dmenu -p 'crop image ?')
+[ "$(printf "%s" "$prompt" | grep -ci 'y')" = 1 ] && cropgui "$HOME/ss-$stamp.png"
 
-prompt=`echo 'y\nn' | dmenu -p 'view sc-shot-crop.png ?'`
-if [ "`echo $prompt | grep -ci 'y'`" = 1 ] 
+prompt=$(printf 'y\nn' | dmenu -p "view ss-$stamp-crop.png ?")
+if [ "$(printf "%s" "$prompt" | grep -ci 'y')" = 1 ] 
 then
-  sxiv $HOME/sc-shot-crop.png
-  prompt=`echo 'y\nn' | dmenu -p 'upload to imgur ?'`
-  [ "`echo $prompt | grep -ci 'y'`" = 1 ] && imgurbash2 $HOME/sc-shot-crop.png
+  sxiv "$HOME/ss-$stamp-crop.png"
+  prompt=$(printf 'y\nn' | dmenu -p 'upload to imgur ?')
+  [ "$(printf "%s" "$prompt" | grep -ci 'y')" = 1 ] && imgurbash2 "$HOME/ss-$stamp-crop.png"
 fi

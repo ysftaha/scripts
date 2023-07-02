@@ -6,6 +6,7 @@ uuidd
 wpa_supplicant
 bluetoothd 
 tlp
+udevd
 crond
 socklog-unix
 nanoklogd

@@ -2,5 +2,5 @@
 #_NET_ACTIVE_WINDOW
 dir=$1
 [ -z "$dir" ] && dir=$mdir
-setsid st -d "$dir" > /dev/null 2> /dev/null &
+setsid st -d "$dir" -e nvim -u ~/.config/nvim/vimrc/term.vimrc > /dev/null 2> /dev/null &
 dwmc viewex 14

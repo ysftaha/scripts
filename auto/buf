@@ -1,4 +1,4 @@
 #! /bin/sh
 list=$(wmctrl -l)
-buf=$(echo "$list" | sed -n 's/  0 origin//p' | dmenu -f -i -p 'win' | cut -d " " -f1)
+buf=$(echo "$list" | sed -n 's/  0 \w*//p' | dmenu -f -i -p 'win' | cut -d " " -f1)
 xdotool windowactivate "$buf"

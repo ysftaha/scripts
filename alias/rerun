@@ -5,4 +5,4 @@
 # TEST:
 cd -- "${0%/*}" || exit 1
 . ../header
-send_keys "$(cat /tmp/termid.dat)" 'Escape' 'ctrl+c' 'ctrl+p' 'Enter'
+send_keys "$(cat /tmp/termid.dat)" 'Escape' 'ctrl+c' 'i' 'BackSpace' 'ctrl+p' 'Enter'

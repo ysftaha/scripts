@@ -1,0 +1,3 @@
+#!/bin/sh
+template=$XDG_CONFIG_HOME/khard/def.yaml
+tmp=$(echo 'mkstemp(/tmp/pomoXXXXXX)' | m4) ; cp "$template" "$tmp"; nvim -c "set ft=yaml" "$tmp"; khard add -i "$tmp"; rm "$tmp"

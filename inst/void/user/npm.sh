@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 . ../func.sh
-while read pkg
+while read -r pkg
 do
-  command sudo npm install -location=global $pkg
-done < $1
+  command npm install -g "$pkg"
+done < npm.txt

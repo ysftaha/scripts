@@ -1,9 +1,0 @@
-curl
-kmod-usb-storage
-luci-app-adblock
-opendoas
-
-nermin:0 -R /nermin
-mkdir /root/.terminfo
-scp -r u@{IP}:/home/u/.terminfo/s /root/.terminfo/
-ln .terminfo/s/* /usr/share/terminfo/s/

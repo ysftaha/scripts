@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 . ../func.sh
-gem install neovim
-while read pkg
+
+while read -r pkg
 do
-  command gem install $pkg
-done < $1
+  command gem install "$pkg"
+done < gem.txt

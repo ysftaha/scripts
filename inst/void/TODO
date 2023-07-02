@@ -1,0 +1,25 @@
+BUG: dhcpcd not linked by default
+Creating a backup:
+
+BEFORE WIPING:
+  * vimium_c, dark reader, ublock origin configs
+  * backup vimium_c config
+  * crontab -l > int user install script dir
+  * fdisk -l > backup somwehere
+  * /mnt/home
+    * .ssh
+    * .local/share/gnupg
+    * .local/share/pass
+    * .local/share/newsboat/cache.db
+    * home dir stuff:
+      * _
+      * ss
+      * tmp
+  * /mnt/backup
+    * /home
+    * /usr/share
+    * /etc
+
+AFTER INSTALLATION:
+  * symlink git/conf/mozilla files
+  * ublock origin in build/other

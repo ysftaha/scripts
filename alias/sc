@@ -1,0 +1,2 @@
+#!/bin/sh
+maim -i $(xdotool getactivewindow) out.png

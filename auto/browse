@@ -1,11 +1,24 @@
 #! /bin/sh
-query=$(dmenu -i -l 10 -p 'net' < ~/.config/bm.txt)
+query=$({
+[ -t 0 ] || cat
+cat -- "$XDG_CONFIG_HOME/bm.txt"
+} | dmenu -i -l 10 -p 'net')
+
 [ -z "$query" ] && exit 1
 
-url=$(echo "$query" | "$AUTO/xurls")
-if [ -n "$url" ]
+# NOTE: see `sh->heredocs`
+url=$("$AUTO/xurls" << URL    
+$query   
+URL
+)
+
+if [ -n "$url" ] 
 then
-   (firefox --new-window "$url")
+  (firefox --new-window "$url")
+elif [ "${query%% *}" = '!d' ] 
+then
+  (firefox --new-window "https://devdocs.io/#q=$query")
 else
-   (firefox --new-window "https://kagi.com/search?q=$query")
+  query=$("$AUTO/query-string-encode" 'q' "$query")
+  (firefox --new-window "https://kagi.com/search?$query")
 fi

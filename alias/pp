@@ -1,0 +1,5 @@
+#!/bin/sh
+{
+  file=${1:-/dev/stdin}
+  curl -s --data-binary "@${file}" https://paste.rs
+} | xclip -selection CIPBOARD

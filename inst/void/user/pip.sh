@@ -2,7 +2,7 @@
 . ../func.sh
 
 und "Downloading and installing pip/npm/gem packages"
-while read pkg
+while read -r pkg
 do
-  command pip install --user $pkg
-done < $1
+  command pip install --user "$pkg"
+done < pip.txt
