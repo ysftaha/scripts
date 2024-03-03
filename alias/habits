@@ -1,0 +1,37 @@
+#! /bin/sh
+tput reset
+cd ~ || exit
+habits="PMO"
+plots="sessions"
+
+width=$(tput cols)
+
+today=$(/bin/grep -i "\[DAY" log.txt | tail -n 1)
+today=${today%%/*}
+today=${today##* }
+
+habit() {
+  h=$(/bin/grep -i " $1" log.txt |\
+    cut -d '/' -f 1 | rev | cut -d ' ' -f 1 | rev)
+  # Today has to be added so that the current streak is
+  # calculated
+  [ "$(echo "$h" | tail -n 1)" != "$today" ] && h="$h $today"
+
+  h=$(echo "$h" | paste -s -d ' ' |\
+  awk  '{for (i = 1; i <= NF-1; i++) \
+  printf "%d\n" , $(i+1)-$i-1}')
+
+  echo "$h" | uniq |\
+  uplot bar -t "$1" -w "$((width  / 2))"
+}
+
+for h in $habits
+do
+  habit "$h"
+done
+
+
+for p in $plots
+do
+  /bin/grep -i "│ $p" log.txt | cut -d ':' -f 2 | tr -d ' │' | uplot line -t "$p" -h 14 -w "$((width * 3 / 4))"
+done

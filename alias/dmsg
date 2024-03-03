@@ -1,4 +1,4 @@
 #! /bin/sh
 # Wrapper for dmesg.
 # NOTE: Dependencies: dmesg
-doas dmesg --color=always -T
+doas dmesg -eH --nopager

@@ -1,0 +1,17 @@
+#!/bin/sh
+cd /home/u/ss/notes/cp-handbook || exit
+[ -d ddir ] && /bin/rm -R ddir
+mkdir ddir
+for i in *
+do
+  if [ -d "$i" ]
+  then
+    [ "$i" != "ddir" ] && ln -sr "$i" ddir/
+  else
+    file=$i
+    /bin/cp "$i" ddir
+    sed -i -e '/^SCHEDULED/d' -e '/^:/d' "ddir/$i"
+  fi
+done
+
+emacs --file="ddir/$file" -f org-drill-directory 

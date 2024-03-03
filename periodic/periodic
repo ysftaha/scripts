@@ -1,9 +1,9 @@
 #!/bin/sh
 
-cd /home/u/git/scripts/periodic
+cd /home/u/git/scripts/periodic || exit
 n=periodic
-scripts=`/bin/ls | sed "/$n/d"`
+scripts=$(/bin/ls | sed "/$n/d")
 for i in $scripts
 do
-  sh $i
+  sh "$i"
 done

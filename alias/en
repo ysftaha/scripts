@@ -1,3 +1,0 @@
-#! /bin/sh
-dwmc viewex 14
-st -t scn -e nvim

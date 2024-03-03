@@ -3,12 +3,13 @@
 
 case $1 in
 	up)
-    [ `pactl get-sink-volume @DEFAULT_SINK@ | /bin/grep -o "[[:digit:]]\+%" | head -1 | tr -d '%'` -ne 100 ] && pactl set-sink-volume @DEFAULT_SINK@ +1%;sh $AUTO/vol-notif 
+    vol=$(wpctl get-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $2 * 100}')
+    [ "$vol" -ne 100 ] && wpctl set-volume @DEFAULT_SINK@ 0.05+;sh "$AUTO"/vol-notif 
 		;;
 	down) 
-    pactl set-sink-volume @DEFAULT_SINK@ -1%;sh $AUTO/vol-notif 
+    wpctl set-volume @DEFAULT_SINK@ 0.05-;sh "$AUTO"/vol-notif 
 		;;
 	mute) 
-    pactl set-sink-mute @DEFAULT_SINK@ toggle;sh $AUTO/vol-notif 
+    wpctl set-mute @DEFAULT_SINK@ toggle;sh "$AUTO"/vol-notif 
 		;;
 esac

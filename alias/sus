@@ -19,7 +19,7 @@ duration() {
 
 dur=$(duration "$@")
 
-alarm-loop 70
+alarm-loop
 sleep 1
 
 doas rfkill block bluetooth

@@ -1,0 +1,2 @@
+#!/bin/sh
+xdotool windowactivate "$(wmctrl -l |grep log.txt |cut -d " " -f1)"

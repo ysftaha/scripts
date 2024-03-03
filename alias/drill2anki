@@ -1,23 +1,24 @@
 #!/bin/sh
-# TODO: FML. Forgot Emacs has od2ae-all-notes
 # NOTE: GNU SED EXTENSIONS USED.
-org_file=$1
-deck="Default"
-[ -n "$2" ] && deck=$2
-out_file="anki/${org_file%%.org}.anki.org"
-[ ! -d anki ] && mkdir -p pdf
-[ -e "$out_file" ] && doas rm "$out_file"
+# NOTE: :noexport: headings are not converted
 
-sed -e '/^#+/d' \
--e '/^\* Startup/,$d' \
+org_file=$1
+deck="import"
+deck=$(sed -n '/^#+ANKI_DECK/p' $1|cut -d ' ' -f 2-)
+[ -n "$2" ] && deck=$2
+
+out_file="anki/${org_file%%.org}.anki.org"
+[ ! -d anki ] && mkdir anki
+[ -e "$out_file" ] && rm -f "$out_file"
+
+sed -e '/^\*\s* :noexport:/,$d' \
 -e "s/^\* \(.\+\)/* Item\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:END:\n** Front\n\1/" \
--e '/^.$/d' \
+-e '/^\.$/d' \
 -e '/^:/d' \
 -e '/^SCHEDULED/d' \
 -e 's/:drill://' \
--e 's/[[:blank:]]*$//' $org_file > $out_file
-sed -i "1s/^/#+PROPERTY: ANKI_DECK $deck\n/" $out_file
+-e 's/[[:blank:]]*$//' "$org_file" > "$out_file"
 
-echo "* Startup\n#+BEGIN_SRC elisp\nLocal Variables:\neval: (anki-editor-push-notes)\nEnd:\n+END_SRC" >> $out_file
+sed -i "1s/^/#+PROPERTY: ANKI_DECK $deck\n/" "$out_file"
 
-emacsclient -nc $out_file
+emacs  -nw --kill "$out_file" -f anki-editor-mode -f anki-editor-push-notes

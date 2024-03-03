@@ -1,0 +1,2 @@
+#!/bin/sh
+xdotool windowactivate $(wmctrl -l|tail -n1|cut -d ' ' -f 1)

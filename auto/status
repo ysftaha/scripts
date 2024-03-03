@@ -53,8 +53,8 @@ do
   hbat=`bluetoothctl info 94:DB:56:D5:44:21|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
   [ $hbat -lt 50 ] && [ -n "$hbat" ] && stat="$stat$hbat%$gray$sep$norm"
 
-  ebat=`bluetoothctl info F8:D1:78:E5:1B:C1|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
-  [ $ebat -lt 50 ] && [ -n "$ebat" ] && stat="$stat$ebat%$gray$sep$norm"
+  ebat=`bluetoothctl info 83:36:54:B9:17:0B|grep "Battery Percentage"|cut -d'(' -f2|tr -d ')'`
+  [ "$ebat" -lt 50 ] && [ -n "$ebat" ] && stat="$stat$ebat%$gray$sep$norm"
 
   # ┌──────────────────┐
   # │ Keyboard Battery │

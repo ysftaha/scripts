@@ -3,16 +3,10 @@
 # NOTE: Dependencies: ZZZ
 cd -- "${0%/*}" || exit 1
 . ../header
-# Recording screen
-# for i in $(wmctrl -l)
-# do
-#   [ "$i" = sc-cast-recording ] && \
-#     notify-send.sh   \
-#       -u critical    \
-#       -a "Hibernate" \
-#       ""             \
-#       "<b>[ABORTED]</b> Recording in progress" && \
-#     exit 1
-# done
+
+if [ "$(xrandr --listactivemonitors | grep 'eDP1' -c)" = "0" ] 
+then
+  xrandr --output HDMI1 --off --output eDP1 --mode 1920x1080
+fi
 doas ZZZ
 sh "$scripts"/periodic/periodic

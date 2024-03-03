@@ -1,0 +1,23 @@
+#! /bin/sh
+
+cd ~ || exit
+workouts="curls,press_f,press_b,pushups,rows,situps,wing"
+
+
+parse () {
+  file="/tmp/$1.dat"
+  cat /dev/null > "$file"
+  gp="$gp ; $1 = \"$file\""
+  list=$(/bin/grep -i "│ $1" log.txt|cut -d ':' -f 2|tr -d ' │')
+  IFS='
+'
+  for i in $list
+  do
+    echo "$i * 100" | bc -l | cut -d '.' -f 1 >> "$file"
+  done
+}
+
+IFS=','
+for w in $workouts; do
+  parse "$w"
+done

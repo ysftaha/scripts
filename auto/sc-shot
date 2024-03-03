@@ -10,6 +10,6 @@ prompt=$(printf 'y\nn' | dmenu -p "view ss-$stamp-crop.png ?")
 if [ "$(printf "%s" "$prompt" | grep -ci 'y')" = 1 ] 
 then
   sxiv "$HOME/ss-$stamp-crop.png"
-  prompt=$(printf 'y\nn' | dmenu -p 'upload to imgur ?')
-  [ "$(printf "%s" "$prompt" | grep -ci 'y')" = 1 ] && imgurbash2 "$HOME/ss-$stamp-crop.png"
+#  prompt=$(printf 'y\nn' | dmenu -p 'upload to imgur ?')
+#  [ "$(printf "%s" "$prompt" | grep -ci 'y')" = 1 ] && imgurbash2 "$HOME/ss-$stamp-crop.png"
 fi

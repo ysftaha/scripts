@@ -3,4 +3,4 @@ export DISPLAY=:0
 export XAUTHORITY=/home/u/.runtime/Xauthority
 export XDG_RUNTIME_DIR="$HOME/.runtime"
 BEEP="/home/u/.config/zsh/beep$1.wav"
-paplay "$BEEP"
+pw-play "$BEEP"

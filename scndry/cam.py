@@ -10,6 +10,7 @@ else:
     rval = False
 
 while rval:
+    frame = cv2.flip(frame, 1)
     cv2.imshow("preview", frame)
     rval, frame = vc.read()
     key = cv2.waitKey(20)

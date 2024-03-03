@@ -19,6 +19,9 @@ elif [ "${query%% *}" = '!d' ]
 then
   (firefox --new-window "https://devdocs.io/#q=$query")
 else
-  query=$("$AUTO/query-string-encode" 'q' "$query")
-  (firefox --new-window "https://kagi.com/search?$query")
+# FIXME: Just uncomment for kagi
+#  query=$("$AUTO/query-string-encode" 'q' "$query") 
+  (firefox --new-window "https://duckduckgo.com/?q=$query")
+# FIXME: Just uncomment for kagi
+#  (firefox --new-window "https://kagi.com/search?$query") 
 fi

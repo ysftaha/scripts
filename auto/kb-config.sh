@@ -4,7 +4,7 @@ DISPLAY=":0"
 export XAUTHORITY DISPLAY
 
 xset r rate 300 5 -display $DISPLAY
-setxkbmap -model pc105 -layout 'us,ara(mac)' -option grp:toggle -display $DISPLAY
+setxkbmap -model pc105 -layout 'us,ara(basic)' -option grp:toggle -display $DISPLAY
 
 a=$(bluetooth)
 case "$a" in

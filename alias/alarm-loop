@@ -6,12 +6,25 @@ export XDG_RUNTIME_DIR="$HOME/.runtime"
 
 BEEP=/home/u/.config/zsh/beep.wav
 
-vol="${1:-80}"
+vol="${1:-90}"
+
+k() {
+  doas kill -9 $(pgrep "$@")
+}
+
+k pipewire
+k wireplumber
+k pipewire-pulse
+(
+pipewire &
+wireplumber &
+pipewire-pulse &
+)
 
 sound_alarm() {
-  pactl set-sink-volume @DEFAULT_SINK@ "${vol}%"
-  pactl set-sink-mute @DEFAULT_SINK@ 0
-  paplay "$BEEP"
+  wpctl set-volume @DEFAULT_SINK@ "${vol}%"
+  wpctl set-mute @DEFAULT_SINK@ 0
+  pw-play "$BEEP"
   sleep 1
 }
 

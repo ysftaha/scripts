@@ -1,0 +1,12 @@
+acpid
+dbus
+isc-ntpd
+ntpd
+uuidd
+wpa_supplicant
+bluetoothd 
+tlp
+udevd
+crond
+socklog-unix
+nanoklogd

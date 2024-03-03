@@ -1,0 +1,23 @@
+#!/bin/gnuplot -p
+
+set term x11 enhanced font "Terminus, 18" lw 2 background "black" title "Workout graphs"
+set border linecolor "#333333"
+set style data linespoints
+set key textcolor rgb "white"
+set border 0
+
+curls="/tmp/curls.dat"
+press_f="/tmp/press_f.dat"
+press_b="/tmp/press_b.dat"
+pushups="/tmp/pushups.dat"
+rows="/tmp/rows.dat"
+situps="/tmp/situps.dat"
+wing="/tmp/wing.dat"
+
+plot curls,press_f,press_b,rows,pushups,situps,wing with linespoints linecolor "magenta", 100 with lines lt "dt" lc "white"
+
+while(1) {
+  replot 
+  system("sh $AUTO/workouts-parse")
+  pause 30
+}

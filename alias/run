@@ -10,7 +10,13 @@ ext="$2"
 
 wid="$(cat /tmp/termid.dat)"
 comm() {
-  echo "$path"
+  if ! xdotool getwindowclassname "$wid"
+  then 
+    n "[Err] No out terminal found"
+    exit
+  fi
+
+#  xdotool windowactivate "$wid"
   xinput --disable 'keyboard:Corne Keyboard'
 
   xdotool key --window "$wid" 'Escape'
@@ -21,25 +27,36 @@ comm() {
   xdotool type --window "$wid" "wdir='$path'"
   xdotool key --window "$wid" Enter 
 
-  xdotool type --window "$wid" "(cd \$wdir && "
+  xdotool type --window "$wid" \
+    "(cd \$wdir && export RUNFILE=$filename && "
   xdotool type --window "$wid" "$*)"
   xdotool key --window "$wid" Enter 
 
   xinput --enable 'keyboard:Corne Keyboard'
 }
 case "$ext" in
+  python)
+    comm "python $filename"
+    ;;
+  java)
+    comm "javac $filename && java ${filename%.*}"
+    ;;
   sh)
     comm "sh $filename"
     ;;
+  gnuplot)
+    comm "gnuplot -persist $filename"
+    ;;
   c)
+    comm "make run"
     ;;
   cpp)
-    comm "export RUNFILE=$filename; make run"
+    comm "make run"
     ;;
   tex)
     comm "xelatex -jobname=out -output-directory=/tmp $filename"
     ;;
-  sql)
+  sql) # using litecli
     xdotool key --window "$wid" 'ctrl+c'
     xdotool type --window "$wid" ".read $filename"
     xdotool key --window "$wid" 'Enter'
@@ -51,3 +68,5 @@ case "$ext" in
     :
     ;;
 esac
+
+xinput --enable 'keyboard:Corne Keyboard'

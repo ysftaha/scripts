@@ -1,0 +1,26 @@
+#! /bin/sh
+
+
+metrics="sessions sleep"
+workouts="curls-h curls-l press-h press-l rows pushups
+situps wing"
+
+width=$(tput cols)
+cd ~ || exit
+tput reset
+
+
+graph() {
+  :
+}
+
+
+parse() {
+  :
+}
+
+
+for w in $workouts; do
+  parse "$w"
+done
+graph # $file

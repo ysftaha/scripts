@@ -1,5 +1,5 @@
 #!/bin/sh
-year=2023
+year=2024
 latitude="42.265"
 longitude="-83.0283"
 api="https://www.moonsighting.com/time_json.php?year=$year&tz=America/Toronto&lat=$latitude&lon=$longitude&method=2&both=0&time=0"
@@ -11,59 +11,59 @@ cron_file_path="$HOME/git/scripts/res/"
 cron_command='/home/u/git/scripts/auto/prayer-notify'
 
 org_file='prayer.org'
-org_file_path="$HOME/git/org/agenda/misc/"
+org_file_path="$HOME/git/org/agenda/tracked/"
 
-tocal() { echo $1 | cut -d ' ' -f $2; }
+tocal() { echo "$1" | cut -d ' ' -f "$2"; }
 parse() { jq ".times[$1].times.$2" $json_file|tr -d ' "'; }
-show () { echo $day $fajr $sunrise $dhuhr $asr $maghrib $isha; }
-h () { echo $1|cut -d ':' -f1; }
-m () { echo $1|cut -d ':' -f2; }
+show () { echo "$day" "$fajr" "$sunrise" "$dhuhr" "$asr" "$maghrib" "$isha"; }
+h () { echo "$1"|cut -d ':' -f1; }
+m () { echo "$1"|cut -d ':' -f2; }
 
 
 cron () { 
-  cday="`echo $day|cut -d ' ' -f2` `echo $day|cut -d ' ' -f1`"
-  fajr="`m $fajr` `h $fajr` $cday"
-  echo $fajr '*' $cron_command \"Fajr\"
+  cday="$(echo "$day"|cut -d ' ' -f2) $(echo "$day"|cut -d ' ' -f1)"
+  fajr="$(m "$fajr") $(h "$fajr") $cday"
+  echo "$fajr" '*' $cron_command \"Fajr\"
 
-  sunrise="`m $sunrise` `h $sunrise` $cday"
-  echo $sunrise '*' $cron_command \"sunrise\"
+  sunrise="$(m "$sunrise") $(h "$sunrise") $cday"
+  echo "$sunrise" '*' $cron_command \"sunrise\"
 
-  dhuhr="`m $dhuhr` `h $dhuhr` $cday"
-  echo $dhuhr '*' $cron_command \"Duhr\"
-
-
-  asr="`m $asr` `h $asr` $cday"
-  echo $asr '*' $cron_command \"Asr\"
+  dhuhr="$(m "$dhuhr") $(h "$dhuhr") $cday"
+  echo "$dhuhr" '*' $cron_command \"Duhr\"
 
 
-  maghrib="`m $maghrib` `h $maghrib` $cday"
-  echo $maghrib '*' $cron_command \"Maghrib\"
+  asr="$(m "$asr") $(h "$asr") $cday"
+  echo "$asr" '*' $cron_command \"Asr\"
 
 
-  isha="`m $isha` `h $isha` $cday"
-  echo $isha '*' $cron_command \"Isha\"
+  maghrib="$(m "$maghrib") $(h "$maghrib") $cday"
+  echo "$maghrib" '*' $cron_command \"Maghrib\"
+
+
+  isha="$(m "$isha") $(h "$isha") $cday"
+  echo "$isha" '*' $cron_command \"Isha\"
 }
 
 
 org () { 
   echo '* Fajr'
-  echo "SCHEDULED: <`date +%Y-%m-%d --date="$day"` $fajr>"
+  echo "SCHEDULED: <$(date +%Y-%m-%d --date="$day") $fajr>"
   echo '* Sunrise'
-  echo "SCHEDULED: <`date +%Y-%m-%d --date="$day"` $sunrise>"
+  echo "SCHEDULED: <$(date +%Y-%m-%d --date="$day") $sunrise>"
   echo '* Duhr'
-  echo "SCHEDULED: <`date +%Y-%m-%d --date="$day"` $dhuhr>"
+  echo "SCHEDULED: <$(date +%Y-%m-%d --date="$day") $dhuhr>"
   echo '* Asr'
-  echo "SCHEDULED: <`date +%Y-%m-%d --date="$day"` $asr>"
+  echo "SCHEDULED: <$(date +%Y-%m-%d --date="$day") $asr>"
   echo '* Maghrib'
-  echo "SCHEDULED: <`date +%Y-%m-%d --date="$day"` $maghrib>"
+  echo "SCHEDULED: <$(date +%Y-%m-%d --date="$day") $maghrib>"
   echo '* Isha'
-  echo "SCHEDULED: <`date +%Y-%m-%d --date="$day"` $isha>"
+  echo "SCHEDULED: <$(date +%Y-%m-%d --date="$day") $isha>"
 }
 
 
 replace () {
-  /bin/cp $cron_file $cron_file_path/$cron_file
-  /bin/cp $org_file $org_file_path/$org_file
+  /bin/cp $cron_file "$cron_file_path"/$cron_file
+  /bin/cp $org_file "$org_file_path"/$org_file
 }
 
 
@@ -72,51 +72,50 @@ icloud () {
   dur=15m
   al=1m
 
-  # TODO (Potential bug) `'` usually gets tabbed when formatting the file.
+  # WARN: (Potential bug) `'` usually gets tabbed when formatting the file.
   IFS='
 '
   n=0
   prayers='Fajr Sunrise Duhr Asr Maghrib Isha'
-  for i in `/bin/cat ./$cron_file`
+  for i in $(/bin/cat ./$cron_file)
   do
-    d=`tocal $i 3`
-    m=`tocal $i 4`
+    d=$(tocal "$i" 3)
+    m=$(tocal "$i" 4)
 
-    H=`tocal $i 2`
-    M=`tocal $i 1`
+    H=$(tocal "$i" 2)
+    M=$(tocal "$i" 1)
 
-    n=$(($n%6+1))
-    prayer=`echo $prayers | cut -d ' ' -f $n`
+    n=$((n%6+1))
+    prayer=$(echo "$prayers" | cut -d ' ' -f $n)
 
-    khal new -a $cal -m 0m $d-$m-$year $H:$M $dur $prayer
-    echo -n "[\033[1;32mVdir\033[0m] $d-$m-$year $H:$M $dur $prayer\n"
+    khal new -a $cal -m 0m "$d"-"$m"-$year "$H":"$M" $dur "$prayer"
+    printf "%s\n" "[\033[1;32mVdir\033[0m] $d-$m-$year $H:$M $dur $prayer"
   done
 
 }
 
+#curl "$api" | json_pp | tee $json_file
+#sed -i '/asr_./d' $json_file        
 
-curl $api | json_pp | tee $json_file
-sed -i '/asr_./d' $json_file        
-
-for i in `seq 0 364`
+for i in $(seq 0 364)
 do
-  day=`jq ".times[$i].day" $json_file|tr -d '"'|cut -d ' ' -f 1,2|tr '[:upper:]' '[:lower:]'`
+  day=$(jq ".times[$i].day" $json_file|tr -d '"'|cut -d ' ' -f 1,2|tr '[:upper:]' '[:lower:]')
 
-  fajr=`parse $i 'fajr'`
-  sunrise=`parse $i 'sunrise'`
-  dhuhr=`parse $i 'dhuhr'`
-  asr=`parse $i 'asr'`
-  maghrib=`parse $i 'maghrib'`
-  isha=`parse $i 'isha'`
+  fajr=$(parse "$i" 'fajr')
+  sunrise=$(parse "$i" 'sunrise')
+  dhuhr=$(parse "$i" 'dhuhr')
+  asr=$(parse "$i" 'asr')
+  maghrib=$(parse "$i" 'maghrib')
+  isha=$(parse "$i" 'isha')
 
   show
-  cron >> $cron_file
-  org >> $org_file
+#  cron >> $cron_file
+  org | tee -a $org_file
 
   replace 
 done
 
-vdirsyncer discover
-vdirsyncer sync
-icloud
-vdirsyncer sync
+#vdirsyncer discover
+#vdirsyncer sync
+#icloud
+#vdirsyncer sync

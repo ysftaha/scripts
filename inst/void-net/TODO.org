@@ -1,0 +1,31 @@
+#+TITLE: void-net checklist
+
+* [X] git
+* [ ] Firefox
+** [ ] Configs
+* [ ] newsboat
+* [ ] Irssi
+* [ ] Aerc
+* [ ] Anki
+* [ ] vim
+* [ ] curl
+* [ ] xtools
+* [ ] htop
+* [ ] tsocks
+** [ ] ip forewarding
+** [ ] NAT
+* [ ] lf
+** [ ] dependencies
+* [X] ssh
+** sshd config
+** dhcpcd config
+
+* [X] services
+** [X] acpid
+** [X] dhcpcd
+** [X] ntpd
+** [X] isc-ntpd
+*** [X] hwclock --systohc
+** [X] sshd
+** [X] wpa_supplicant
+** [ ] battery notification over ssh script

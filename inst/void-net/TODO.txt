@@ -1,0 +1,34 @@
+Goals:
+[ ]
+Firefox
+git
+  lf
+    fzf
+    bat
+    perl-File-MimeInfo
+Anki
+irssi
+newsboat
+
+zathura
+wacom
+bluetooth
+
+
+
+___________________________________________________________
+vim
+firefox-esr
+libXinerama-devel
+libXpm-devel
+libXft-devel
+xdg-user-dirs
+terminus-font
+notify-send.sh
+dunst
+font-awesome5
+zathura-djvu
+xorg-minimal
+socklog-void
+opendoas
+---- Do it in reverse. Starting by the application

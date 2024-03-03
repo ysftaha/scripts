@@ -10,8 +10,8 @@ tmp=$(echo 'mkstemp(/tmp/pomoXXXXXX)' | m4)
 
 
 d=$(date +%-j)
-d=$((d*6-5)) # first line of prayers (Fajir)
-p=$(sed -n "$d,$((d+5))p" $res)
+d=$((d*5-4)) # first line of prayers (Fajir)
+p=$(sed -n "$d,$((d+4))p" $res)
 
 touch "$tmp"
 crontab -l > "$tmp"

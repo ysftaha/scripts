@@ -1,0 +1,3 @@
+#! /bin/sh
+desktop=$(wmctrl -d|sed -n '/^[[:digit:]]\+\s*\*/p'|cut -d ' ' -f 1)
+dwmc toggletagex "$desktop"

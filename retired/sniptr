@@ -1,9 +1,9 @@
 #!/bin/sh
 
 dir=$1
-[ -z $dir ] && dir=`pwd`
-for i in `ls $dir`
+[ -z "$dir" ] && dir=$(pwd)
+for i in *
 do
-  char="`tail -c1 $i | od -c | head -1 | cut -d " " -f 3`"
-  [ ! -z $char ] && [ $char = "\n" ] && truncate -s-1 $i
+  char="$(tail -c1 "$i" | od -c | head -1 | cut -d " " -f 3)"
+  [ -n "$char" ] && [ "$char" = "\n" ] && truncate -s-1 "$i"
 done

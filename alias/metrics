@@ -1,0 +1,54 @@
+#!/bin/sh
+cd ~ || exit
+print() {
+  printf "%s\n" "$1"
+}
+
+merge() {
+  com1=$(echo 'mkstemp(/tmp/pomoXXXXXX)' | m4)
+  com2=$(echo 'mkstemp(/tmp/pomoXXXXXX)' | m4)
+  print "$1" > "$com1"
+  print "$2" > "$com2"
+  paste -d ' ' "$com1" "$com2"
+  /bin/rm "$com1" "$com2"
+}
+
+accumulate() {
+  list=$(/bin/grep -i "│ $1" log.txt|cut -d ':' -f 2|tr -d ' │')
+  num=$(echo "";  seq "$(print "$list" | wc -l)")
+  act=$(echo ""; print "$list"|cut -d '/' -f 1)
+  exp=$(echo "Expected"; print "$list"|cut -d '/' -f 2)
+
+  merge "$(merge "$num" "$act")" "$exp" |\
+    uplot lines -w 100 -h 25 -d ' ' --fmt xyy -t "$1" -H --xlabel "" -c yellow --canvas braille
+  echo "$act" | uplot hist -w 90 --xlabel ""
+}
+
+workouts="curls-h curls-l press-h press-l rows pushups situps wing sessions sleep"
+accumulate "$(echo "$workouts" | tr ' ' '\n' | fzf --height=10 --no-info \
+  --color="gutter:#000000,bg+:#222222,pointer:#00a787,prompt:#000000" \
+  --tac --no-sort -e +i --bind "tab:accept" --query="$BUFFER")"
+
+today=$(/bin/grep -i "\[DAY" log.txt|tail -n 1|cut -d ' ' -f 3|cut -d '/' -f 1)
+pmo=$(/bin/grep -i " pmo" log.txt|cut -d '/' -f 1 |\
+  cut -d ' ' -f3)
+lwu=$(/bin/grep -i " lwu" log.txt|cut -d '/' -f 1 |\
+  cut -d ' ' -f3)
+[ "$(echo "$pmo"|tail -n 1)" != "$today" ] && pmo="$pmo $today"
+[ "$(echo "$lwu"|tail -n 1)" != "$today" ] && lwu="$lwu $today"
+#[ "$(echo "$lwu"|rev|cut -d ' ' -f 1|rev)" != "$today" ] && lwu="$lwu\n$today"
+
+pmo=$(echo "$pmo" |paste -s -d ' '| awk  '{for (i = 1; i <= NF-1; i++) printf "%d\n" , $(i+1)-$i-1}')
+echo "$pmo" |uniq | uplot bar -t "Days without faping"
+
+lwu=$(echo "$lwu" |paste -s -d ' '| awk  '{for (i = 1; i <= NF-1; i++) printf "%d\n" , $(i+1)-$i-1}')
+echo "$lwu" |uniq | uplot bar -t "Wake up streak"
+
+{
+  cat /dev/null > ~/metrics.dat
+  for data in $workouts; do
+    accumulate "$data" 2>> ~/metrics.dat
+    echo '' >> ~/metrics.dat
+  done 
+  sed -i 's///' ~/metrics.dat
+} &

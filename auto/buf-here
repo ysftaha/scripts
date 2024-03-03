@@ -1,0 +1,9 @@
+#! /bin/sh
+desktop=$(xdotool get_desktop)
+list=$(wmctrl -l|sort)
+buf=$(echo "$list" | sed -n 's/  0 \w*//p' | dmenu -l "$(wmctrl -l | wc -l)" -f -i -p 'win' | cut -d " " -f1)
+[ -z "$buf" ] && exit
+
+xdotool windowactivate --sync "$buf" 
+dwmc toggletagex "$desktop" 
+dwmc viewex "$desktop"
