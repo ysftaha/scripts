@@ -6,7 +6,7 @@ d=$(date +%-j)
 d=$((d * 5 - 4)) 
 
 IFS=','
-prayers='Fajr,Duhr,Asr,Maghrib,Isha'
+prayers='fajr,duhr,asr,maghrib,isha'
 for i in $prayers; do
   # Next 7 days:
   p=$(sed -n "$d,$((d+35)) { /$i/p; }" $cron_file)

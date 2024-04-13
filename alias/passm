@@ -1,17 +1,23 @@
 #!/bin/sh
-gpgfile=$(find ~/.local/share/pass -type f -name '*.gpg' |
-  sed 's/.*\/\(.*\)\.gpg$/\1/' | dmenu -i -p "Pass:")
 
-case $gpgfile in
+if [ -z "$1" ]
+then
+  password=$(find ~/.local/share/pass -type f -name '*.gpg' |
+    sed 's/.*\/\(.*\)\.gpg$/\1/' | dmenu -i -p "Pass:")
+  op=" -c"
+else
+  password="$1"
+  op=
+fi
+
+case $password in
   '')
-    :
+    exit 1
     ;;
   *-otp)
-    st -c "pass" -g "60x12+660+426" -t "passm" -t "passm" -e /bin/pass otp -c "$gpgfile"
-    /bin/pass otp -c "$gpgfile"
+    eval "/bin/pass otp $op $password"
     ;;
   *)
-    st -c "pass" -g "60x12+660+426" -t "passm" -e /bin/pass show -c "$gpgfile"
-    /bin/pass show -c "$gpgfile"
+    eval "/bin/pass show $op $password"
     ;;
 esac

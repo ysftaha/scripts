@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+hosts=/etc/hosts 
+
+is_valid_url() {
+  curl --silent --head --fail "$1" >/dev/null && return 0
+  return 1
+}
+
+extract_root_domain() {
+  url="$1"
+
+  url="${url#http://}"
+  url="${url#https://}"
+
+  domain="${url#www.}"
+
+  root_domain="${domain%%/*}"
+
+  echo "$root_domain"
+}
+
+escape_root_domain() { echo "$1" | sed 's/[.[\*^$/]/\\&/g'; }
+
+# Usage example
+url=$1
+if ! is_valid_url "$url" ;
+then
+  echo '[Err] Invalid url'
+  exit 1
+fi
+
+echo 'Parsing url...'
+domain=$(escape_root_domain "$(extract_root_domain "$url")")
+
+sed -i "s/# START_CLI/&\n0.0.0.0 $domain/g" $hosts
+
+domain=$(escape_root_domain "www.$(extract_root_domain "$url")")
+
+sed -i "s/# START_CLI/&\n0.0.0.0 $domain/g" $hosts
+
+service dnsmasq restart

@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+url=http://sbc.io/hosts/alternates/fakenews-gambling-porn-social/hosts
+tmp=hosts.down
+
+while ! ping -c 1 google.ca ; do
+	logger '[Err] No internet'
+	sleep 1m
+done
+
+curl "$url" -o "$tmp"
+
+sed -i '/START_UNIFIED/,/END_UNIFIED/{/START_UNIFIED/!{/END_UNIFIED/!d}}' /etc/hosts
+awk -v tmp="$tmp" '/START_UNIFIED/,/END_UNIFIED/ {if (/START_UNIFIED/) {print; system("cat " tmp)} else if (!/END_UNIFIED/) next} !/START_UNIFIED/,!/END_UNIFIED/' /etc/hosts > /etc/hosts.tmp && mv /etc/hosts.tmp /etc/hosts
+
+rm -f $tmp
+logger '[DONE] updated /etc/hosts'

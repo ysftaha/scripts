@@ -4,9 +4,5 @@
 cd -- "${0%/*}" || exit 1
 . ../header
 
-if [ "$(xrandr --listactivemonitors | grep 'eDP1' -c)" = "0" ] 
-then
-  xrandr --output HDMI1 --off --output eDP1 --mode 1920x1080
-fi
 doas ZZZ
 sh "$scripts"/periodic/periodic

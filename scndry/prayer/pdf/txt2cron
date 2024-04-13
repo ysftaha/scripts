@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+input=$1
+comm="* /home/u/git/scripts/auto/prayer-notify "
+
+prayer() {
+  tmp=$(printf "%s"  "$l"|cut -d ' ' -f "$1")
+  echo "$(printf "%s"  "$tmp"|cut -d ':' -f 2) $(printf "%s"  "$tmp"|cut -d ':' -f 1)"
+}
+
+parse() {
+  l=$(echo "$1"|tr -d '\n')
+  date=$(printf "%s"  "$l"|cut -d ' ' -f 1|tr -s '-' ' ')
+
+  fajr=$(prayer 2)
+  duhr=$(prayer 3)
+  asr=$(prayer 4)
+  maghrib=$(prayer 5)
+  isha=$(prayer 6)
+
+  echo "$fajr $date $comm 'fajr'"
+  echo "$duhr $date $comm 'duhr'"
+  echo "$asr $date $comm 'asr'"
+  echo "$maghrib $date $comm 'maghrib'"
+  echo "$isha $date $comm 'isha'"
+}
+
+while read -r line
+do
+  parse "$line" >> out.cron
+done < "$input"

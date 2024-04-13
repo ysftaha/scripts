@@ -5,7 +5,7 @@ dev=/dev/sda
 user=u
 und "Migrating external backup [ $dev ] to user [ $user ]"
 
-command mount "$dev" /mnt
+#command mount "$dev" /mnt
 command rm /home/u/.* # TODO: Retest this (had a bug in June)
 command cp -R /mnt/home/* /home/"$user"/
 command mkdir /home/"$user"/.runtime

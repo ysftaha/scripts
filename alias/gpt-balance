@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+curl -s -X GET https://api.openai.com/dashboard/billing/credit_grants \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer $(pass show OPENAI_SESSION_KEY)"|jq ".total_available"

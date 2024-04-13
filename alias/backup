@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+
+dev=/dev/$(/bin/lsblk -n -l |fzf --tac|cut -d ' ' -f 1)
+
+if [ -n "$dev" ]; then
+  /bin/lsblk
+  printf "\n%s" "You selected '$dev'. Are you sure? [y/N] " 
+  read -r confirmation
+
+  case "$confirmation" in
+    [Yy])
+      echo "Backing up to $dev..."
+      ;;
+    *)
+      echo "Aborting."
+      exit 1
+      ;;
+  esac
+else
+  echo "[Err] No selection made"
+  exit 1
+fi
+
+#sleep 3s
+pmount "$dev" backup
+doas chown u:u /media/backup
+doas chown u:u /media/backup/home
+
+cd /home/u || exit
+
+# NOTE: trailing / is needed to sync deletion in dirs
+rsync --delete -avh .local/share/pass/ .local/share/gnupg/ .local/share/lf/ /media/backup/home/.local/
+rsync --delete -avh .ssh/ /media/backup/home/.ssh/
+rsync --delete -avh uni/ /media/backup/home/uni/
+rsync --delete -avh git/ /media/backup/home/git
+
+# NOTE: Deletion of home dir files are not synced
+rsync --delete -avh ./*.* /media/backup/home/

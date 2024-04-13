@@ -68,6 +68,12 @@ do
     [ $kbat -lt 50 ] && [ -n "$kbat" ] && stat="$stat"K:$kbat%"$gray$sep$norm"
   fi
 
+  # ┌────────────────┐
+  # │ Tablet Battery │
+  # └────────────────┘
+  tbat=$(cat /sys/class/power_supply/wacom*/capacity)
+  [ $tbat -lt 50 ] && [ -n "$tbat" ] && stat="$stat"T:$tbat%"$gray$sep$norm"
+
   # ┌─────────┐
   # │ Battery │
   # └─────────┘

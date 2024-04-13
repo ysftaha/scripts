@@ -10,3 +10,4 @@ sh pip.sh
 sh npm.sh
 sh gem.sh
 sh nvim.sh
+sh cron.sh

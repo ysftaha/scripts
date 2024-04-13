@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if [ -n "$SSH_ORIGINAL_COMMAND" ]
+then
+	/bin/block "$SSH_ORIGINAL_COMMAND"
+else
+	echo "[ERR] No argument given"
+	exit 1
+fi

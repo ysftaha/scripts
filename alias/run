@@ -1,6 +1,4 @@
 #!/bin/sh
-# TODO: Generalize xdotool to a function that disables the keyboard (defined in
-# the header) before and after op.
 # NOTE:Dependencies: xinput, xdotool
 # TEST:
 filename="$1"
@@ -16,9 +14,6 @@ comm() {
     exit
   fi
 
-#  xdotool windowactivate "$wid"
-  xinput --disable 'keyboard:Corne Keyboard'
-
   xdotool key --window "$wid" 'Escape'
   xdotool key --window "$wid" 'ctrl+c'
   xdotool key --window "$wid" 'i' 'BackSpace'
@@ -32,7 +27,6 @@ comm() {
   xdotool type --window "$wid" "$*)"
   xdotool key --window "$wid" Enter 
 
-  xinput --enable 'keyboard:Corne Keyboard'
 }
 case "$ext" in
   python)
@@ -43,6 +37,9 @@ case "$ext" in
     ;;
   sh)
     comm "sh $filename"
+    ;;
+  awk)
+    comm "awk -f $filename 'times.txt' > out.txt"
     ;;
   gnuplot)
     comm "gnuplot -persist $filename"

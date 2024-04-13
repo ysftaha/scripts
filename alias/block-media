@@ -1,7 +1,0 @@
-#!/bin/sh
-xdotool key --delay 20ms ctrl+l
-xdotool mousemove 1785 35
-xdotool click 1
-xdotool mousemove 1630 230 
-sleep 0.5s 
-xdotool click 1

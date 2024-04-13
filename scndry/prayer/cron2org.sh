@@ -14,4 +14,4 @@ do
   m=$(printf "%s" "$line"|cut -d ' ' -f1)
   time="$h:$m"
   org >> out.org
-done < "$1"
+done < out.cron

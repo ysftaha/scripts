@@ -2,13 +2,13 @@
 # package installation script. Run this as root.
 . ../func.sh
 
-und "Setting up WIFI"
-command ln -s /etc/sv/wpa_supplicant /var/service
-command cp /mnt/home/git/conf/config/etc/wpa_supplicant/wpa_supplicant-wlp2s0.conf /etc/wpa_supplicant/
-command sv restart wpa_supplicant
-command sv restart dhcpcd
-und "Waiting for services to restart"
-command sleep 30s
+#und "Setting up WIFI"
+#command ln -s /etc/sv/wpa_supplicant /var/service
+#command cp /mnt/home/git/conf/config/etc/wpa_supplicant/wpa_supplicant-wlp2s0.conf /etc/wpa_supplicant/
+#command sv restart wpa_supplicant
+#command sv restart dhcpcd
+#und "Waiting for services to restart"
+#command sleep 30s
 
 # update
 xbps-install -y -Su xbps
@@ -33,5 +33,5 @@ und "Rebuilding itramfs for intel microcode"
 command "xbps-reconfigure -f linux"
 
 und "Configuring packages"
-command modprobe acpi_call
+#command modprobe acpi_call
 command xdg-user-dirs-update
